@@ -267,27 +267,49 @@ export default function VenueCard({ venue, onUpdate, onDelete, isHighlighted }) 
             )}
           </div>
 
-          {/* Documents */}
+          {/* Documents & Files */}
           {(venue.documents || []).length > 0 && (
             <div>
-              <h3 className="font-sans font-semibold text-plum-700 text-sm uppercase tracking-wider mb-3">Documents & PDFs</h3>
-              <div className="grid sm:grid-cols-2 gap-2">
-                {(venue.documents || []).map(doc => (
-                  <a
-                    key={doc.id}
-                    href={doc.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 px-4 py-3 bg-parchment rounded-xl border border-plum-100 hover:border-plum-300 hover:bg-plum-50 transition-all group"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-plum-100 flex items-center justify-center shrink-0 group-hover:bg-plum-200 transition-colors">
-                      <FileText className="w-4 h-4 text-plum-500" />
-                    </div>
-                    <span className="font-sans text-sm text-plum-700 flex-1 truncate">{doc.name}</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-plum-300 group-hover:text-plum-500 shrink-0 transition-colors" />
-                  </a>
-                ))}
-              </div>
+              <h3 className="font-sans font-semibold text-plum-700 text-sm uppercase tracking-wider mb-3">Files & Documents</h3>
+
+              {/* Images grid */}
+              {(venue.documents || []).filter(d => d.type === 'image' || d.mimeType?.startsWith('image/')).length > 0 && (
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+                  {(venue.documents || []).filter(d => d.type === 'image' || d.mimeType?.startsWith('image/')).map(doc => (
+                    <a key={doc.id} href={doc.url} target="_blank" rel="noopener noreferrer"
+                      className="relative rounded-xl overflow-hidden bg-plum-50 aspect-video group">
+                      <img src={doc.url} alt={doc.name} className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+                        <ExternalLink className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      <p className="absolute bottom-0 left-0 right-0 px-2 py-1 text-xs text-white bg-black/40 truncate opacity-0 group-hover:opacity-100 transition-opacity">{doc.name}</p>
+                    </a>
+                  ))}
+                </div>
+              )}
+
+              {/* Non-image files */}
+              {(venue.documents || []).filter(d => d.type !== 'image' && !d.mimeType?.startsWith('image/')).length > 0 && (
+                <div className="grid sm:grid-cols-2 gap-2">
+                  {(venue.documents || []).filter(d => d.type !== 'image' && !d.mimeType?.startsWith('image/')).map(doc => {
+                    const isPdf = doc.type === 'pdf' || doc.mimeType === 'application/pdf'
+                    const Icon = isPdf ? FileText : ExternalLink
+                    return (
+                      <a key={doc.id} href={doc.url} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center gap-3 px-4 py-3 bg-parchment rounded-xl border border-plum-100 hover:border-plum-300 hover:bg-plum-50 transition-all group">
+                        <div className="w-8 h-8 rounded-lg bg-plum-100 flex items-center justify-center shrink-0 group-hover:bg-plum-200 transition-colors">
+                          <Icon className="w-4 h-4 text-plum-500" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-sans text-sm text-plum-700 truncate">{doc.name}</p>
+                          {doc.size && <p className="text-xs text-plum-400 font-sans">{doc.size < 1024*1024 ? `${(doc.size/1024).toFixed(0)} KB` : `${(doc.size/(1024*1024)).toFixed(1)} MB`}</p>}
+                        </div>
+                        <ExternalLink className="w-3.5 h-3.5 text-plum-300 group-hover:text-plum-500 shrink-0 transition-colors" />
+                      </a>
+                    )
+                  })}
+                </div>
+              )}
             </div>
           )}
         </div>
