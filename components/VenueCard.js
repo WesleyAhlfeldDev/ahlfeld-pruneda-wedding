@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronDown, ChevronUp, MapPin, Users, Globe, Pencil, Trash2, Plus, Check, Star } from 'lucide-react'
+import { ChevronDown, ChevronUp, MapPin, Users, Globe, Pencil, Trash2, Plus, Check, Star, FileText, ExternalLink, Image } from 'lucide-react'
 import { formatCurrency } from '../lib/data'
 import PackageCard from './PackageCard'
 import AddOnRow from './AddOnRow'
@@ -68,7 +68,19 @@ export default function VenueCard({ venue, onUpdate, onDelete, isHighlighted }) 
   }
 
   return (
-    <div className={`card transition-all duration-300 ${isHighlighted ? 'ring-2 ring-plum-400 shadow-lg' : ''}`}>
+    <div className={`card transition-all duration-300 relative group ${isHighlighted ? 'ring-2 ring-plum-400 shadow-lg' : ''}`}>
+      {/* Cover Image */}
+      {venue.coverImage && (
+        <div className="h-48 overflow-hidden rounded-t-2xl bg-plum-50">
+          <img
+            src={venue.coverImage}
+            alt={venue.name}
+            className="w-full h-full object-cover"
+            onError={e => e.target.parentElement.style.display = 'none'}
+          />
+        </div>
+      )}
+
       {/* Header */}
       <div className="p-6 pb-4">
         <div className="flex items-start justify-between gap-4">
@@ -103,18 +115,23 @@ export default function VenueCard({ venue, onUpdate, onDelete, isHighlighted }) 
               <p className="mt-2 text-sm text-plum-500 font-sans italic">{venue.notes}</p>
             )}
           </div>
-          <div className="flex items-center gap-1 shrink-0">
-            <button onClick={() => setEditing(true)} className="p-2 rounded-full hover:bg-plum-50 text-plum-400 hover:text-plum-600 transition-colors">
-              <Pencil className="w-4 h-4" />
-            </button>
-            <button onClick={() => onDelete(venue.id)} className="p-2 rounded-full hover:bg-red-50 text-plum-400 hover:text-red-400 transition-colors">
-              <Trash2 className="w-4 h-4" />
-            </button>
-            <button onClick={() => setExpanded(!expanded)} className="p-2 rounded-full hover:bg-plum-50 text-plum-400 transition-colors ml-1">
-              {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-            </button>
-          </div>
+          {/* Expand/collapse button — always visible */}
+          <button onClick={() => setExpanded(!expanded)} className="p-2 rounded-full hover:bg-plum-50 text-plum-400 transition-colors shrink-0">
+            {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+          </button>
         </div>
+      </div>
+
+      {/* Edit/Delete — absolutely positioned on hover so they never affect layout */}
+      <div className="absolute top-4 right-12 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-lg px-1 py-0.5 shadow-sm z-10">
+        <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-plum-50 text-plum-400 hover:text-plum-600 transition-colors">
+          <Pencil className="w-4 h-4" />
+        </button>
+        <button
+          onClick={() => { if (confirm(`Remove "${venue.name}"? This cannot be undone.`)) onDelete(venue.id) }}
+          className="p-1.5 rounded-lg hover:bg-red-50 text-plum-400 hover:text-red-400 transition-colors">
+          <Trash2 className="w-4 h-4" />
+        </button>
       </div>
 
       {expanded && (
@@ -249,6 +266,30 @@ export default function VenueCard({ venue, onUpdate, onDelete, isHighlighted }) 
               </div>
             )}
           </div>
+
+          {/* Documents */}
+          {(venue.documents || []).length > 0 && (
+            <div>
+              <h3 className="font-sans font-semibold text-plum-700 text-sm uppercase tracking-wider mb-3">Documents & PDFs</h3>
+              <div className="grid sm:grid-cols-2 gap-2">
+                {(venue.documents || []).map(doc => (
+                  <a
+                    key={doc.id}
+                    href={doc.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-4 py-3 bg-parchment rounded-xl border border-plum-100 hover:border-plum-300 hover:bg-plum-50 transition-all group"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-plum-100 flex items-center justify-center shrink-0 group-hover:bg-plum-200 transition-colors">
+                      <FileText className="w-4 h-4 text-plum-500" />
+                    </div>
+                    <span className="font-sans text-sm text-plum-700 flex-1 truncate">{doc.name}</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-plum-300 group-hover:text-plum-500 shrink-0 transition-colors" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
