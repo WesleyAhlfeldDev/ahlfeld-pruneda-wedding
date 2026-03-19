@@ -45,15 +45,15 @@ export default function Login() {
             <div className="w-16 h-16 rounded-full bg-gradient-to-br from-plum-400 to-plum-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
               <Heart className="w-8 h-8 text-white fill-current" />
             </div>
-            <h1 className="font-serif text-2xl font-semibold text-plum-800">Wesley & Leesianna's</h1>
-            <p className="text-sm text-plum-400 font-sans mt-1">Wedding Planner ✨</p>
+            <h1 className="font-serif text-2xl font-semibold text-white">Wesley & Leesianna's</h1>
+            <p className="text-sm text-moon-300 font-sans mt-1">Wedding Planner ✨</p>
           </div>
 
           {/* Card */}
           <div className="card p-8">
             <div className="flex items-center gap-2 mb-6">
-              <Lock className="w-4 h-4 text-plum-400" />
-              <h2 className="font-serif text-lg text-plum-700">Enter Password</h2>
+              <Lock className="w-4 h-4 text-moon-300" />
+              <h2 className="font-serif text-lg text-plum-50">Enter Password</h2>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -69,7 +69,7 @@ export default function Login() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(s => !s)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-plum-300 hover:text-plum-500 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white0 hover:text-plum-100 transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -89,7 +89,7 @@ export default function Login() {
             </form>
           </div>
 
-          <p className="text-center text-xs text-plum-300 font-sans mt-6">
+          <p className="text-center text-xs text-white0 font-sans mt-6">
             For Wesley & Leesianna and their families 💕
           </p>
         </div>

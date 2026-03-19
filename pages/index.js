@@ -142,7 +142,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div className="min-h-screen pattern-bg">
-        <header className="bg-white/80 backdrop-blur-sm border-b border-plum-100 sticky top-0 z-40">
+        <header className="bg-forest-500/80 backdrop-blur-sm border-b border-plum-700/50 sticky top-0 z-40">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center gap-3">
@@ -150,19 +150,19 @@ export default function Home() {
                   <Heart className="w-4 h-4 text-white fill-current" />
                 </div>
                 <div>
-                  <h1 className="font-serif font-semibold text-plum-800 text-lg leading-none">Wesley & Leesianna's</h1>
-                  <p className="text-xs text-plum-400 font-sans">Wedding Planner ✨</p>
+                  <h1 className="font-serif font-semibold text-white text-lg leading-none">Wesley & Leesianna's</h1>
+                  <p className="text-xs text-moon-300 font-sans">Wedding Planner ✨</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1.5 text-xs font-sans">
                   {isUsingSupabase() ? (
-                    <span className={`flex items-center gap-1 ${syncing ? 'text-amber-500' : 'text-sage-500'}`}>
+                    <span className={`flex items-center gap-1 ${syncing ? 'text-amber-500' : 'text-sage-600'}`}>
                       <Cloud className="w-3.5 h-3.5" />
                       <span className="hidden sm:inline">{syncing ? 'Saving...' : 'Synced'}</span>
                     </span>
                   ) : (
-                    <span className="flex items-center gap-1 text-plum-300">
+                    <span className="flex items-center gap-1 text-white0">
                       <HardDrive className="w-3.5 h-3.5" />
                       <span className="hidden sm:inline">Local only</span>
                     </span>
@@ -185,54 +185,54 @@ export default function Home() {
 
         <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
           <div className="mb-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="bg-white rounded-2xl border border-plum-100 p-4 shadow-sm flex flex-col items-center justify-center min-h-24">
-              <p className="font-serif text-2xl font-bold text-plum-700">{venues.length}</p>
-              <p className="text-xs text-plum-400 font-sans mt-1">Venues Saved</p>
+            <div className="bg-forest-500 rounded-2xl border border-plum-700/50 p-4 shadow-sm flex flex-col items-center justify-center min-h-24">
+              <p className="font-serif text-2xl font-bold text-plum-50">{venues.length}</p>
+              <p className="text-xs text-moon-300 font-sans mt-1">Venues Saved</p>
             </div>
-            <div className="bg-white rounded-2xl border border-plum-100 p-4 shadow-sm flex flex-col items-center justify-center min-h-24">
-              <p className="font-serif text-2xl font-bold text-plum-700">{venues.reduce((s, v) => s + v.packages.length, 0)}</p>
-              <p className="text-xs text-plum-400 font-sans mt-1">Total Packages</p>
+            <div className="bg-forest-500 rounded-2xl border border-plum-700/50 p-4 shadow-sm flex flex-col items-center justify-center min-h-24">
+              <p className="font-serif text-2xl font-bold text-plum-50">{venues.reduce((s, v) => s + v.packages.length, 0)}</p>
+              <p className="text-xs text-moon-300 font-sans mt-1">Total Packages</p>
             </div>
-            <div className="bg-white rounded-2xl border border-plum-100 p-4 shadow-sm flex flex-col items-center justify-center min-h-24">
+            <div className="bg-forest-500 rounded-2xl border border-plum-700/50 p-4 shadow-sm flex flex-col items-center justify-center min-h-24">
               <input type="number" value={guestCount} onChange={e => setGuestCount(e.target.value)} placeholder="—"
-                className="w-full text-center font-serif text-2xl font-bold text-plum-700 bg-transparent border-none outline-none placeholder-plum-200 focus:text-plum-600 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
-              <p className="text-xs text-plum-400 font-sans mt-1">Est. Guest Count</p>
+                className="w-full text-center font-serif text-2xl font-bold text-plum-50 bg-transparent border-none outline-none placeholder-plum-200 focus:text-plum-200 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+              <p className="text-xs text-moon-300 font-sans mt-1">Est. Guest Count</p>
             </div>
-            <div className="bg-white rounded-2xl border border-plum-100 p-4 shadow-sm flex flex-col items-center justify-center min-h-24">
+            <div className="bg-forest-500 rounded-2xl border border-plum-700/50 p-4 shadow-sm flex flex-col items-center justify-center min-h-24">
               {daysUntil !== null ? (
                 <>
-                  <p className="font-serif text-2xl font-bold text-plum-700">{daysUntil.toLocaleString()}</p>
-                  <p className="text-xs text-plum-400 font-sans mt-1">Days Until Wedding</p>
-                  <button onClick={() => setWeddingDate('')} className="text-xs text-plum-300 hover:text-plum-500 mt-1 font-sans">
+                  <p className="font-serif text-2xl font-bold text-plum-50">{daysUntil.toLocaleString()}</p>
+                  <p className="text-xs text-moon-300 font-sans mt-1">Days Until Wedding</p>
+                  <button onClick={() => setWeddingDate('')} className="text-xs text-white0 hover:text-plum-100 mt-1 font-sans">
                     {new Date(weddingDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} ×
                   </button>
                 </>
               ) : (
                 <>
                   <input type="date" value={weddingDate} onChange={e => setWeddingDate(e.target.value)}
-                    className="w-full text-center font-serif text-sm text-plum-500 bg-transparent border-none outline-none cursor-pointer" />
-                  <p className="text-xs text-plum-400 font-sans mt-1">Wedding Date</p>
+                    className="w-full text-center font-serif text-sm text-white0 bg-transparent border-none outline-none cursor-pointer" />
+                  <p className="text-xs text-moon-300 font-sans mt-1">Wedding Date</p>
                 </>
               )}
             </div>
           </div>
 
-          <div className="flex items-center gap-1 bg-white rounded-2xl p-1.5 border border-plum-100 shadow-sm mb-6 w-fit flex-wrap">
+          <div className="flex items-center gap-1 bg-forest-500 rounded-2xl p-1.5 border border-plum-700/50 shadow-sm mb-6 w-fit flex-wrap">
             {TABS.map(t => {
               const Icon = t.icon
               return (
                 <button key={t.id} onClick={() => setTab(t.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl font-sans text-sm font-medium transition-all ${tab === t.id ? 'bg-plum-600 text-white shadow-sm' : 'text-plum-500 hover:text-plum-700 hover:bg-plum-50'}`}>
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl font-sans text-sm font-medium transition-all ${tab === t.id ? 'bg-plum-600 text-white shadow-sm' : 'text-white0 hover:text-plum-50 hover:bg-forest-600'}`}>
                   <Icon className="w-4 h-4" />
                   {t.label}
                   {t.id === 'compare' && venues.length >= 2 && (
-                    <span className={`text-xs px-1.5 py-0.5 rounded-full ${tab === t.id ? 'bg-plum-500' : 'bg-plum-100 text-plum-500'}`}>{venues.length}</span>
+                    <span className={`text-xs px-1.5 py-0.5 rounded-full ${tab === t.id ? 'bg-forest-6000' : 'bg-forest-500 text-white0'}`}>{venues.length}</span>
                   )}
                   {t.id === 'todos' && activeTodos > 0 && (
-                    <span className={`text-xs px-1.5 py-0.5 rounded-full ${tab === t.id ? 'bg-plum-500' : 'bg-amber-100 text-amber-600'}`}>{activeTodos}</span>
+                    <span className={`text-xs px-1.5 py-0.5 rounded-full ${tab === t.id ? 'bg-forest-6000' : 'bg-amber-100 text-amber-600'}`}>{activeTodos}</span>
                   )}
                   {t.id === 'notes' && notes.length > 0 && (
-                    <span className={`text-xs px-1.5 py-0.5 rounded-full ${tab === t.id ? 'bg-plum-500' : 'bg-plum-100 text-plum-500'}`}>{notes.length}</span>
+                    <span className={`text-xs px-1.5 py-0.5 rounded-full ${tab === t.id ? 'bg-forest-6000' : 'bg-forest-500 text-white0'}`}>{notes.length}</span>
                   )}
                 </button>
               )
@@ -244,11 +244,11 @@ export default function Home() {
               {showAddVenue && <VenueForm onSave={addVenue} onCancel={() => setShowAddVenue(false)} />}
               {venues.length === 0 && !showAddVenue && (
                 <div className="card p-16 text-center">
-                  <div className="w-16 h-16 rounded-full bg-plum-100 flex items-center justify-center mx-auto mb-4">
-                    <Sparkles className="w-8 h-8 text-plum-400" />
+                  <div className="w-16 h-16 rounded-full bg-forest-500 flex items-center justify-center mx-auto mb-4">
+                    <Sparkles className="w-8 h-8 text-moon-300" />
                   </div>
-                  <h2 className="font-serif text-2xl text-plum-700 mb-2">No venues yet</h2>
-                  <p className="text-plum-400 font-sans mb-6">Start adding venues to compare and estimate costs.</p>
+                  <h2 className="font-serif text-2xl text-plum-50 mb-2">No venues yet</h2>
+                  <p className="text-moon-300 font-sans mb-6">Start adding venues to compare and estimate costs.</p>
                   <button onClick={() => setShowAddVenue(true)} className="btn-primary inline-flex items-center gap-2">
                     <Plus className="w-4 h-4" /> Add Your First Venue
                   </button>
@@ -259,7 +259,7 @@ export default function Home() {
               ))}
               {venues.length > 0 && !showAddVenue && (
                 <button onClick={() => setShowAddVenue(true)}
-                  className="w-full py-4 rounded-2xl border-2 border-dashed border-plum-200 text-plum-400 hover:border-plum-300 hover:text-plum-600 transition-all font-sans text-sm flex items-center justify-center gap-2">
+                  className="w-full py-4 rounded-2xl border-2 border-dashed border-plum-600 text-moon-300 hover:border-plum-400 hover:text-white transition-all font-sans text-sm flex items-center justify-center gap-2">
                   <Plus className="w-4 h-4" /> Add another venue
                 </button>
               )}
@@ -276,8 +276,8 @@ export default function Home() {
           {tab === 'notes' && <NotesView notes={notes} setNotes={setNotes} />}
         </main>
 
-        <footer className="text-center py-8 text-xs text-plum-300 font-sans">
-          <p>Made with <Heart className="w-3 h-3 inline text-plum-400 fill-current" /> for your special day ·{' '}
+        <footer className="text-center py-8 text-xs text-white0 font-sans">
+          <p>Made with <Heart className="w-3 h-3 inline text-moon-300 fill-current" /> for your special day ·{' '}
             {isUsingSupabase() ? 'Live sync across all devices ☁️' : 'Set up Supabase to share with family'}
           </p>
         </footer>

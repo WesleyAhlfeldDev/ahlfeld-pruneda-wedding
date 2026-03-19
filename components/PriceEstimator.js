@@ -3,7 +3,15 @@ import { Calculator, Check, ChevronDown } from 'lucide-react'
 import { formatCurrency } from '../lib/data'
 
 export default function PriceEstimator({ venues, globalGuestCount, estimate, setEstimate }) {
-  const { selectedVenue, selectedPackage, selectedAddons, selectedPerPersonAddons, guestCount, overrideGuestPrice, notes } = estimate
+  const {
+    selectedVenue = '',
+    selectedPackage = '',
+    selectedAddons = [],
+    selectedPerPersonAddons = [],
+    guestCount = '',
+    overrideGuestPrice = '',
+    notes = '',
+  } = estimate || {}
 
   function set(patch) {
     setEstimate(prev => ({ ...prev, ...patch }))
@@ -91,12 +99,12 @@ export default function PriceEstimator({ venues, globalGuestCount, estimate, set
 
   return (
     <div className="card overflow-visible">
-      <div className="p-6 border-b border-plum-100">
+      <div className="p-6 border-b border-plum-700/50">
         <div className="flex items-center gap-2">
-          <Calculator className="w-5 h-5 text-plum-400" />
-          <h2 className="font-serif text-xl font-semibold text-plum-800">Price Estimator</h2>
+          <Calculator className="w-5 h-5 text-moon-300" />
+          <h2 className="font-serif text-xl font-semibold text-white">Price Estimator</h2>
         </div>
-        <p className="text-sm text-plum-400 font-sans mt-1">Build out an estimate for any venue + package combination</p>
+        <p className="text-sm text-moon-300 font-sans mt-1">Build out an estimate for any venue + package combination</p>
       </div>
 
       <div className="p-6 space-y-5">
@@ -110,7 +118,7 @@ export default function PriceEstimator({ venues, globalGuestCount, estimate, set
               <option value="">— Choose a venue —</option>
               {venues.map(v => <option key={v.id} value={v.id}>{v.name}</option>)}
             </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-plum-300 pointer-events-none" />
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white0 pointer-events-none" />
           </div>
         </div>
 
@@ -128,16 +136,16 @@ export default function PriceEstimator({ venues, globalGuestCount, estimate, set
                   }}
                   className={`text-left p-4 rounded-xl border-2 transition-all ${
                     selectedPackage === p.id
-                      ? 'border-plum-400 bg-plum-50'
-                      : 'border-plum-100 hover:border-plum-200 bg-white'
+                      ? 'border-plum-400 bg-forest-600'
+                      : 'border-plum-700/50 hover:border-plum-600 bg-forest-500'
                   }`}>
                   <div className="flex items-center justify-between">
-                    <span className="font-serif font-semibold text-plum-800">{p.name}</span>
-                    {selectedPackage === p.id && <Check className="w-4 h-4 text-plum-500" />}
+                    <span className="font-serif font-semibold text-white">{p.name}</span>
+                    {selectedPackage === p.id && <Check className="w-4 h-4 text-white0" />}
                   </div>
-                  <p className="font-serif text-xl font-bold text-plum-600 mt-1">{formatCurrency(p.price)}</p>
+                  <p className="font-serif text-xl font-bold text-plum-200 mt-1">{formatCurrency(p.price)}</p>
                   {p.guestCount > 0 && (
-                    <p className="text-xs text-plum-400 font-sans mt-1">Up to {p.guestCount} guests{p.hours > 0 ? ` · ${p.hours}h` : ''}</p>
+                    <p className="text-xs text-moon-300 font-sans mt-1">Up to {p.guestCount} guests{p.hours > 0 ? ` · ${p.hours}h` : ''}</p>
                   )}
                 </button>
               ))}
@@ -156,20 +164,20 @@ export default function PriceEstimator({ venues, globalGuestCount, estimate, set
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all text-left ${
                     selectedAddons.includes(ao.id)
                       ? 'border-sage-400 bg-sage-100'
-                      : 'border-plum-100 hover:border-plum-200 bg-white'
+                      : 'border-plum-600/40 hover:border-plum-500 bg-forest-400'
                   }`}>
                   <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all ${
-                    selectedAddons.includes(ao.id) ? 'border-sage-400 bg-sage-400' : 'border-plum-200'
+                    selectedAddons.includes(ao.id) ? 'border-sage-400 bg-sage-400' : 'border-plum-600'
                   }`}>
                     {selectedAddons.includes(ao.id) && <Check className="w-3 h-3 text-white" />}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <span className="font-sans font-medium text-sm text-plum-700">{ao.name}</span>
+                    <span className="font-sans font-medium text-sm text-plum-50">{ao.name}</span>
                     {ao.description && (
-                      <span className="ml-1.5 text-xs text-plum-400">{ao.description}</span>
+                      <span className="ml-1.5 text-xs text-moon-300">{ao.description}</span>
                     )}
                   </div>
-                  <span className="font-sans font-semibold text-plum-600 text-sm">{formatCurrency(ao.price)}</span>
+                  <span className="font-sans font-semibold text-plum-200 text-sm">{formatCurrency(ao.price)}</span>
                 </button>
               ))}
             </div>
@@ -183,7 +191,7 @@ export default function PriceEstimator({ venues, globalGuestCount, estimate, set
             <input className="input" type="number" placeholder="e.g. 120"
               value={guestCount} onChange={e => setGuestCount(e.target.value)} />
             {pkg && guestCount && pkg.guestCount > 0 && (
-              <p className="text-xs text-plum-400 mt-1 font-sans">
+              <p className="text-xs text-moon-300 mt-1 font-sans">
                 Package includes up to {pkg.guestCount} guests
               </p>
             )}
@@ -197,14 +205,14 @@ export default function PriceEstimator({ venues, globalGuestCount, estimate, set
 
         {/* Extra guest box — only shown when over the limit */}
         {pkg && extraGuests > 0 && (
-          <div className="bg-blush-50 border border-blush-200 rounded-xl p-4 space-y-4">
-            <p className="text-sm font-sans font-semibold text-plum-700">
+          <div className="bg-forest-400 border border-plum-700/40 rounded-xl p-4 space-y-4">
+            <p className="text-sm font-sans font-semibold text-plum-50">
               {extraGuests} {extraGuests === 1 ? 'guest' : 'guests'} over the {pkg.guestCount} included
             </p>
 
             {/* Base per-person entry cost */}
             <div className="flex items-center gap-3">
-              <span className="text-sm text-plum-500 font-sans whitespace-nowrap">$ per person</span>
+              <span className="text-sm text-white0 font-sans whitespace-nowrap">$ per person</span>
               <input
                 className="input w-32"
                 type="number"
@@ -213,16 +221,16 @@ export default function PriceEstimator({ venues, globalGuestCount, estimate, set
                 onChange={e => setOverrideGuestPrice(e.target.value)}
               />
               {extraGuestCost > 0 && (
-                <span className="text-sm font-sans text-plum-500">
-                  {extraGuests} × {formatCurrency(parseFloat(overrideGuestPrice) || 0)} = <span className="font-semibold text-plum-700">{formatCurrency(extraGuestCost)}</span>
+                <span className="text-sm font-sans text-white0">
+                  {extraGuests} × {formatCurrency(parseFloat(overrideGuestPrice) || 0)} = <span className="font-semibold text-plum-50">{formatCurrency(extraGuestCost)}</span>
                 </span>
               )}
             </div>
 
             {/* Per-person add-ons as checkboxes */}
             {perPersonAddons.length > 0 && (
-              <div className="space-y-2 pt-1 border-t border-blush-200">
-                <p className="text-xs font-sans text-plum-400 pt-1">Per-person add-ons</p>
+              <div className="space-y-2 pt-1 border-t border-plum-700/40">
+                <p className="text-xs font-sans text-moon-300 pt-1">Per-person add-ons</p>
                 {perPersonAddons.map(ao => {
                   const checked = selectedPerPersonAddons.includes(ao.id)
                   const lineCost = ao.price * extraGuests
@@ -231,17 +239,17 @@ export default function PriceEstimator({ venues, globalGuestCount, estimate, set
                       key={ao.id}
                       onClick={() => togglePerPersonAddon(ao.id)}
                       className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg border-2 transition-all text-left ${
-                        checked ? 'border-plum-300 bg-plum-50' : 'border-blush-200 bg-white hover:border-plum-200'
+                        checked ? 'border-plum-300 bg-forest-600' : 'border-plum-700/40 bg-forest-500 hover:border-plum-600'
                       }`}>
                       <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
-                        checked ? 'border-plum-400 bg-plum-400' : 'border-plum-200'
+                        checked ? 'border-plum-400 bg-plum-400' : 'border-plum-600'
                       }`}>
                         {checked && <Check className="w-2.5 h-2.5 text-white" />}
                       </div>
-                      <span className="font-sans text-sm text-plum-700 flex-1">{ao.name}</span>
+                      <span className="font-sans text-sm text-plum-50 flex-1">{ao.name}</span>
                       <div className="text-right shrink-0">
-                        <span className="font-sans font-semibold text-sm text-plum-600">{formatCurrency(lineCost)}</span>
-                        <span className="text-xs text-plum-400 font-sans ml-1">({extraGuests} × {formatCurrency(ao.price)})</span>
+                        <span className="font-sans font-semibold text-sm text-plum-200">{formatCurrency(lineCost)}</span>
+                        <span className="text-xs text-moon-300 font-sans ml-1">({extraGuests} × {formatCurrency(ao.price)})</span>
                       </div>
                     </button>
                   )
@@ -253,7 +261,7 @@ export default function PriceEstimator({ venues, globalGuestCount, estimate, set
 
         {/* Total */}
         {pkg && (
-          <div className="bg-gradient-to-br from-plum-600 to-plum-800 rounded-2xl p-6 text-white">
+          <div className="bg-gradient-to-br from-plum-700 to-plum-900 rounded-2xl p-6 text-white">
             <div className="space-y-2 mb-4">
               <div className="flex justify-between text-sm font-sans text-plum-200">
                 <span>Package: {pkg.name}</span>
@@ -285,21 +293,21 @@ export default function PriceEstimator({ venues, globalGuestCount, estimate, set
                   </div>
                 )
               })}
-              <div className="h-px bg-plum-500 my-2" />
+              <div className="h-px bg-forest-6000 my-2" />
               <div className="flex justify-between items-center">
                 <span className="font-serif text-lg text-white">Estimated Total</span>
                 <span className="font-serif text-3xl font-bold text-white">{formatCurrency(subtotal)}</span>
               </div>
-              {notes && <p className="text-xs text-plum-300 font-sans mt-2 italic">{notes}</p>}
+              {notes && <p className="text-xs text-white0 font-sans mt-2 italic">{notes}</p>}
             </div>
-            <button onClick={reset} className="w-full text-center text-xs text-plum-300 hover:text-white transition-colors font-sans">
+            <button onClick={reset} className="w-full text-center text-xs text-white0 hover:text-white transition-colors font-sans">
               Reset estimator
             </button>
           </div>
         )}
 
         {!pkg && !selectedVenue && (
-          <div className="text-center py-6 text-plum-300 font-sans text-sm">
+          <div className="text-center py-6 text-white0 font-sans text-sm">
             Select a venue and package to see your estimate
           </div>
         )}

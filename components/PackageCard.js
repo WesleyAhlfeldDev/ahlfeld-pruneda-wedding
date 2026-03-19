@@ -28,7 +28,7 @@ export default function PackageCard({ pkg, onUpdate, onDelete }) {
 
   if (editing) {
     return (
-      <div className="bg-plum-50 rounded-xl border border-plum-200 p-4 space-y-3">
+      <div className="bg-forest-600 rounded-xl border border-plum-600 p-4 space-y-3">
         <div className="grid grid-cols-2 gap-3">
           <div className="col-span-2">
             <label className="label">Package Name</label>
@@ -63,13 +63,13 @@ export default function PackageCard({ pkg, onUpdate, onDelete }) {
               <input className="input text-sm" value={item}
                 onChange={e => setDraft(d => ({ ...d, includes: d.includes.map((v, j) => j === i ? e.target.value : v) }))} />
               <button onClick={() => setDraft(d => ({ ...d, includes: d.includes.filter((_, j) => j !== i) }))}
-                className="shrink-0 p-1.5 text-plum-300 hover:text-red-400 transition-colors">
+                className="shrink-0 p-1.5 text-white0 hover:text-red-400 transition-colors">
                 <X className="w-4 h-4" />
               </button>
             </div>
           ))}
           <button onClick={() => setDraft(d => ({ ...d, includes: [...d.includes, ''] }))}
-            className="text-xs text-plum-500 hover:text-plum-700 flex items-center gap-1 mt-1">
+            className="text-xs text-white0 hover:text-plum-50 flex items-center gap-1 mt-1">
             <Plus className="w-3.5 h-3.5" /> Add item
           </button>
         </div>
@@ -86,24 +86,24 @@ export default function PackageCard({ pkg, onUpdate, onDelete }) {
   }
 
   return (
-    <div className="relative border border-plum-100 rounded-xl overflow-hidden bg-white hover:border-plum-200 transition-all group">
+    <div className="relative border border-plum-600/50 rounded-xl overflow-hidden bg-forest-400 hover:border-plum-500 hover:bg-forest-300 transition-all group">
       {/* Accordion Header */}
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-parchment transition-colors"
+        className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-forest-400 transition-colors"
       >
         <div className="flex items-center gap-4 flex-1 min-w-0 flex-wrap pr-16">
-          <span className="font-serif text-plum-800 text-base">{pkg.name}</span>
-          <span className="font-serif text-plum-600 font-semibold text-sm whitespace-nowrap">
+          <span className="font-serif text-white text-base">{pkg.name}</span>
+          <span className="font-serif text-plum-200 font-semibold text-sm whitespace-nowrap">
             {formatCurrency(pkg.price)}
           </span>
           {pkg.guestCount > 0 && (
-            <span className="flex items-center gap-1 text-xs text-plum-400 font-sans bg-plum-50 px-2 py-0.5 rounded-full whitespace-nowrap">
+            <span className="flex items-center gap-1 text-xs text-moon-300 font-sans bg-forest-600 px-2 py-0.5 rounded-full whitespace-nowrap">
               <Users className="w-3 h-3" /> {pkg.guestCount} guests
             </span>
           )}
           {pkg.hours > 0 && (
-            <span className="flex items-center gap-1 text-xs text-plum-400 font-sans bg-plum-50 px-2 py-0.5 rounded-full whitespace-nowrap">
+            <span className="flex items-center gap-1 text-xs text-moon-300 font-sans bg-forest-600 px-2 py-0.5 rounded-full whitespace-nowrap">
               <Clock className="w-3 h-3" /> {pkg.hours} hrs
             </span>
           )}
@@ -111,38 +111,38 @@ export default function PackageCard({ pkg, onUpdate, onDelete }) {
 
         <div className="shrink-0">
           {open
-            ? <ChevronUp className="w-4 h-4 text-plum-400" />
-            : <ChevronDown className="w-4 h-4 text-plum-400" />}
+            ? <ChevronUp className="w-4 h-4 text-moon-300" />
+            : <ChevronDown className="w-4 h-4 text-moon-300" />}
         </div>
       </button>
 
       {/* Action buttons — hidden on mobile, absolutely positioned on hover for desktop */}
       <div
-        className="hidden sm:flex absolute right-10 top-3 gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-lg px-1 py-0.5 shadow-sm"
+        className="hidden sm:flex absolute right-10 top-3 gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-forest-500/90 rounded-lg px-1 py-0.5 shadow-sm"
         onClick={e => e.stopPropagation()}
       >
-        <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-plum-100 text-plum-400 transition-colors">
+        <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-forest-500 text-moon-300 transition-colors">
           <Pencil className="w-3.5 h-3.5" />
         </button>
-        <button onClick={handleDelete} className="p-1.5 rounded-lg hover:bg-red-50 text-plum-300 hover:text-red-400 transition-colors">
+        <button onClick={handleDelete} className="p-1.5 rounded-lg hover:bg-red-50 text-white0 hover:text-red-400 transition-colors">
           <Trash2 className="w-3.5 h-3.5" />
         </button>
       </div>
 
       {open && (
-        <div className="px-5 pb-5 pt-1 border-t border-plum-50">
+        <div className="px-5 pb-5 pt-1 border-t border-plum-800">
           {pkg.extraGuestPrice > 0 && (
-            <p className="text-xs text-plum-400 font-sans mt-3 mb-2 flex items-center gap-1.5">
-              <span className="inline-block w-4 h-4 rounded-full bg-blush-100 text-blush-500 text-center leading-4 text-xs font-bold">+</span>
-              Additional guests: <span className="font-semibold text-plum-600">{formatCurrency(pkg.extraGuestPrice)} / person</span> beyond {pkg.guestCount} included
+            <p className="text-xs text-moon-300 font-sans mt-3 mb-2 flex items-center gap-1.5">
+              <span className="inline-block w-4 h-4 rounded-full bg-blush-100 text-blush-200 text-center leading-4 text-xs font-bold">+</span>
+              Additional guests: <span className="font-semibold text-plum-200">{formatCurrency(pkg.extraGuestPrice)} / person</span> beyond {pkg.guestCount} included
             </p>
           )}
           {pkg.includes?.length > 0 && (
             <ul className="space-y-2 mt-3">
               {pkg.includes.map((item, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-sm text-plum-600 font-sans">
+                <li key={i} className="flex items-start gap-2.5 text-sm text-plum-200 font-sans">
                   <span className="mt-0.5 w-4 h-4 rounded-full bg-sage-200 flex items-center justify-center shrink-0">
-                    <Check className="w-2.5 h-2.5 text-sage-500" />
+                    <Check className="w-2.5 h-2.5 text-sage-600" />
                   </span>
                   {item}
                 </li>

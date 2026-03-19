@@ -7,39 +7,64 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['"Marcellus"', 'Georgia', 'serif'],
+        serif: ['"Cinzel"', 'Georgia', 'serif'],
         sans: ['"Nunito"', 'sans-serif'],
       },
       colors: {
-        blush: {
-          50: '#fdf6f0',
-          100: '#faebd7',
-          200: '#f5d5b8',
-          300: '#edb98a',
-          400: '#e09660',
-          500: '#d4784a',
-        },
-        plum: {
-          50: '#f8f4f8',
-          100: '#ede0ed',
-          200: '#d9bfda',
-          300: '#be92bf',
-          400: '#9f6aa1',
-          500: '#7d4e80',
-          600: '#5e3660',
-          700: '#4a2a4c',
-          800: '#3a2039',
-          900: '#2a162a',
-        },
+        // Forest greens — for success/check states
         sage: {
-          100: '#e8ede8',
-          200: '#c8d5c8',
-          300: '#a3b8a3',
-          400: '#7d9a7d',
-          500: '#5a7a5a',
+          100: '#0f2010',
+          200: '#1a3a1a',
+          300: '#2d5a2d',
+          400: '#4a8a4a',
+          500: '#6ab56a',
+          600: '#90d090',
         },
-        cream: '#faf7f2',
-        parchment: '#f5f0e8',
+        // Twilight purples — main brand color (light values = readable text, dark = backgrounds)
+        plum: {
+          50:  '#f0ebff',  // very light lavender — primary text on dark bg
+          100: '#ddd0ff',  // light lavender
+          200: '#c4aaff',  // medium lavender
+          300: '#a882e8',  // soft purple
+          400: '#8a60cc',  // medium purple
+          500: '#6e44aa',  // main brand purple
+          600: '#5a3490',  // deeper purple
+          700: '#3d2260',  // dark purple
+          800: '#261540',  // very dark purple
+          900: '#150d28',  // near black purple
+        },
+        // Moon silver — secondary text
+        moon: {
+          100: '#e8edf5',
+          200: '#c8d4e8',
+          300: '#a0b0cc',
+          400: '#7888a8',
+          500: '#505e7a',
+          600: '#323c55',
+          700: '#1e2538',
+          800: '#131820',
+        },
+        // Dark backgrounds
+        forest: {
+          300: '#2a3245',
+          400: '#1e2638',
+          500: '#161d2e',
+          600: '#111622',
+          700: '#0c1018',
+          800: '#080c12',
+        },
+        // Amber/gold accents
+        blush: {
+          50:  '#fff4e0',
+          100: '#ffe0b0',
+          200: '#ffc870',
+          300: '#e8a840',
+          400: '#c88820',
+          500: '#a86800',
+          600: '#6a4000',
+        },
+        cream: '#0c1018',
+        parchment: '#161d2e',
       },
     },
   },

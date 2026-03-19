@@ -119,10 +119,10 @@ export default function VenueForm({ initial, onSave, onCancel }) {
   return (
     <div className="card p-6 space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="font-serif text-lg font-semibold text-plum-800">
+        <h3 className="font-serif text-lg font-semibold text-white">
           {initial?.id ? 'Edit Venue' : 'New Venue'}
         </h3>
-        <button onClick={onCancel} className="p-2 rounded-full hover:bg-plum-50 text-plum-400">
+        <button onClick={onCancel} className="p-2 rounded-full hover:bg-forest-600 text-moon-300">
           <X className="w-4 h-4" />
         </button>
       </div>
@@ -154,7 +154,7 @@ export default function VenueForm({ initial, onSave, onCancel }) {
             value={form.coverImage || ''}
             onChange={e => set('coverImage', e.target.value)} />
           {form.coverImage && (
-            <div className="mt-2 rounded-xl overflow-hidden h-32 bg-plum-50">
+            <div className="mt-2 rounded-xl overflow-hidden h-32 bg-forest-600">
               <img src={form.coverImage} alt="Cover preview" className="w-full h-full object-cover"
                 onError={e => e.target.style.display = 'none'} />
             </div>
@@ -169,21 +169,21 @@ export default function VenueForm({ initial, onSave, onCancel }) {
         {/* Files & Documents */}
         <div className="sm:col-span-2">
           <label className="label">Files & Documents</label>
-          <p className="text-xs text-plum-400 font-sans mb-3">Upload PDFs, images, brochures — or add a link to an external file</p>
+          <p className="text-xs text-moon-300 font-sans mb-3">Upload PDFs, images, brochures — or add a link to an external file</p>
 
           {/* Upload area */}
-          <label className={`flex flex-col items-center justify-center w-full h-28 rounded-xl border-2 border-dashed transition-all cursor-pointer mb-3 ${uploading ? 'border-plum-300 bg-plum-50' : 'border-plum-200 hover:border-plum-400 hover:bg-plum-50'}`}>
+          <label className={`flex flex-col items-center justify-center w-full h-28 rounded-xl border-2 border-dashed transition-all cursor-pointer mb-3 ${uploading ? 'border-plum-300 bg-forest-600' : 'border-plum-600 hover:border-plum-400 hover:bg-forest-600'}`}>
             <div className="flex flex-col items-center gap-2">
               {uploading ? (
                 <>
-                  <Loader2 className="w-6 h-6 text-plum-400 animate-spin" />
-                  <span className="text-sm text-plum-400 font-sans">Uploading...</span>
+                  <Loader2 className="w-6 h-6 text-moon-300 animate-spin" />
+                  <span className="text-sm text-moon-300 font-sans">Uploading...</span>
                 </>
               ) : (
                 <>
-                  <Upload className="w-6 h-6 text-plum-300" />
-                  <span className="text-sm text-plum-500 font-sans font-medium">Click to upload files</span>
-                  <span className="text-xs text-plum-300 font-sans">PDFs, images, Word docs, and more</span>
+                  <Upload className="w-6 h-6 text-white0" />
+                  <span className="text-sm text-white0 font-sans font-medium">Click to upload files</span>
+                  <span className="text-xs text-white0 font-sans">PDFs, images, Word docs, and more</span>
                 </>
               )}
             </div>
@@ -201,16 +201,16 @@ export default function VenueForm({ initial, onSave, onCancel }) {
               {(form.documents || []).map(doc => {
                 const Icon = getFileIcon(doc.mimeType)
                 return (
-                  <div key={doc.id} className="flex items-center gap-3 bg-plum-50 rounded-xl px-3 py-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-plum-100 flex items-center justify-center shrink-0">
-                      <Icon className="w-4 h-4 text-plum-500" />
+                  <div key={doc.id} className="flex items-center gap-3 bg-forest-600 rounded-xl px-3 py-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-forest-500 flex items-center justify-center shrink-0">
+                      <Icon className="w-4 h-4 text-white0" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-sans text-sm text-plum-700 truncate">{doc.name}</p>
-                      {doc.size && <p className="text-xs text-plum-400 font-sans">{formatSize(doc.size)}</p>}
-                      {doc.type === 'link' && <p className="text-xs text-plum-400 font-sans truncate">{doc.url}</p>}
+                      <p className="font-sans text-sm text-plum-50 truncate">{doc.name}</p>
+                      {doc.size && <p className="text-xs text-moon-300 font-sans">{formatSize(doc.size)}</p>}
+                      {doc.type === 'link' && <p className="text-xs text-moon-300 font-sans truncate">{doc.url}</p>}
                     </div>
-                    <button onClick={() => removeDoc(doc)} className="shrink-0 p-1 text-plum-300 hover:text-red-400 transition-colors">
+                    <button onClick={() => removeDoc(doc)} className="shrink-0 p-1 text-white0 hover:text-red-400 transition-colors">
                       <X className="w-4 h-4" />
                     </button>
                   </div>
@@ -220,8 +220,8 @@ export default function VenueForm({ initial, onSave, onCancel }) {
           )}
 
           {/* Manual link entry */}
-          <div className="border-t border-plum-100 pt-3">
-            <p className="text-xs text-plum-400 font-sans mb-2">Or add an external link (Google Drive, Dropbox, etc.)</p>
+          <div className="border-t border-plum-700/50 pt-3">
+            <p className="text-xs text-moon-300 font-sans mb-2">Or add an external link (Google Drive, Dropbox, etc.)</p>
             <div className="flex gap-2">
               <input className="input flex-1" placeholder="Label (e.g. Wedding Packages PDF)"
                 value={newDoc.name} onChange={e => setNewDoc(d => ({ ...d, name: e.target.value }))} />

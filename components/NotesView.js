@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { Plus, Trash2, Pencil, Check, X, Pin, Tag } from 'lucide-react'
 
 const CATEGORIES = [
-  { id: 'general', label: 'General', color: 'bg-plum-100 text-plum-600 border-plum-200' },
-  { id: 'venue', label: 'Venue', color: 'bg-sage-100 text-sage-500 border-sage-200' },
-  { id: 'budget', label: 'Budget', color: 'bg-blush-100 text-blush-500 border-blush-200' },
+  { id: 'general', label: 'General', color: 'bg-forest-500 text-plum-200 border-plum-600' },
+  { id: 'venue', label: 'Venue', color: 'bg-sage-100 text-sage-600 border-sage-200' },
+  { id: 'budget', label: 'Budget', color: 'bg-blush-100 text-blush-200 border-plum-700/40' },
   { id: 'todo', label: 'To-Do', color: 'bg-amber-100 text-amber-600 border-amber-200' },
   { id: 'question', label: 'Question', color: 'bg-blue-100 text-blue-600 border-blue-200' },
 ]
@@ -42,7 +42,7 @@ function NoteCard({ note, onUpdate, onDelete }) {
 
   if (editing) {
     return (
-      <div className="bg-white rounded-2xl border-2 border-plum-300 p-5 space-y-3 shadow-sm">
+      <div className="bg-forest-500 rounded-2xl border-2 border-plum-300 p-5 space-y-3 shadow-sm">
         <input
           className="input font-serif text-lg font-semibold"
           placeholder="Note title..."
@@ -58,7 +58,7 @@ function NoteCard({ note, onUpdate, onDelete }) {
           autoFocus
         />
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs text-plum-400 font-sans">Category:</span>
+          <span className="text-xs text-moon-300 font-sans">Category:</span>
           {CATEGORIES.map(cat => (
             <button
               key={cat.id}
@@ -66,7 +66,7 @@ function NoteCard({ note, onUpdate, onDelete }) {
               className={`text-xs font-sans px-3 py-1 rounded-full border transition-all ${
                 draft.category === cat.id
                   ? cat.color + ' font-semibold'
-                  : 'bg-white text-plum-400 border-plum-200 hover:border-plum-300'
+                  : 'bg-forest-500 text-moon-300 border-plum-600 hover:border-plum-400'
               }`}
             >
               {cat.label}
@@ -81,11 +81,11 @@ function NoteCard({ note, onUpdate, onDelete }) {
           <label className="ml-auto flex items-center gap-1.5 cursor-pointer">
             <div
               onClick={() => setDraft(d => ({ ...d, pinned: !d.pinned }))}
-              className={`w-7 h-4 rounded-full transition-colors relative ${draft.pinned ? 'bg-plum-400' : 'bg-plum-200'}`}
+              className={`w-7 h-4 rounded-full transition-colors relative ${draft.pinned ? 'bg-plum-400' : 'bg-forest-400'}`}
             >
-              <span className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-all ${draft.pinned ? 'left-3.5' : 'left-0.5'}`} />
+              <span className={`absolute top-0.5 w-3 h-3 rounded-full bg-forest-500 transition-all ${draft.pinned ? 'left-3.5' : 'left-0.5'}`} />
             </div>
-            <span className="text-xs font-sans text-plum-500">Pin</span>
+            <span className="text-xs font-sans text-white0">Pin</span>
           </label>
         </div>
       </div>
@@ -93,29 +93,29 @@ function NoteCard({ note, onUpdate, onDelete }) {
   }
 
   return (
-    <div className={`bg-white rounded-2xl border p-5 shadow-sm group transition-all hover:shadow-md ${note.pinned ? 'border-plum-300 ring-1 ring-plum-200' : 'border-plum-100'}`}>
+    <div className={`bg-forest-500 rounded-2xl border p-5 shadow-sm group transition-all hover:shadow-md ${note.pinned ? 'border-plum-300 ring-1 ring-plum-200' : 'border-plum-700/50'}`}>
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex items-center gap-2 flex-wrap min-w-0">
-          {note.pinned && <Pin className="w-3.5 h-3.5 text-plum-400 fill-current shrink-0" />}
+          {note.pinned && <Pin className="w-3.5 h-3.5 text-moon-300 fill-current shrink-0" />}
           <span className={`text-xs font-sans px-2.5 py-0.5 rounded-full border ${getCategoryStyle(note.category)}`}>
             {getCategoryLabel(note.category)}
           </span>
-          <span className="text-xs text-plum-300 font-sans">{dateStr}</span>
+          <span className="text-xs text-white0 font-sans">{dateStr}</span>
         </div>
         <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
-          <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-plum-50 text-plum-400 transition-colors">
+          <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-forest-600 text-moon-300 transition-colors">
             <Pencil className="w-3.5 h-3.5" />
           </button>
-          <button onClick={() => onDelete(note.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-plum-300 hover:text-red-400 transition-colors">
+          <button onClick={() => onDelete(note.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-white0 hover:text-red-400 transition-colors">
             <Trash2 className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
 
       {note.title && (
-        <h3 className="font-serif text-plum-800 text-lg mb-1.5">{note.title}</h3>
+        <h3 className="font-serif text-white text-lg mb-1.5">{note.title}</h3>
       )}
-      <p className="font-sans text-sm text-plum-600 leading-relaxed whitespace-pre-wrap">{note.content}</p>
+      <p className="font-sans text-sm text-plum-200 leading-relaxed whitespace-pre-wrap">{note.content}</p>
     </div>
   )
 }
@@ -165,7 +165,7 @@ export default function NotesView({ notes, setNotes }) {
             className={`text-xs font-sans px-3 py-1.5 rounded-full border transition-all ${
               filterCategory === 'all'
                 ? 'bg-plum-600 text-white border-plum-600'
-                : 'bg-white text-plum-400 border-plum-200 hover:border-plum-300'
+                : 'bg-forest-500 text-moon-300 border-plum-600 hover:border-plum-400'
             }`}
           >
             All ({notes.length})
@@ -180,7 +180,7 @@ export default function NotesView({ notes, setNotes }) {
                 className={`text-xs font-sans px-3 py-1.5 rounded-full border transition-all ${
                   filterCategory === cat.id
                     ? cat.color + ' font-semibold'
-                    : 'bg-white text-plum-400 border-plum-200 hover:border-plum-300'
+                    : 'bg-forest-500 text-moon-300 border-plum-600 hover:border-plum-400'
                 }`}
               >
                 {cat.label} ({count})
@@ -198,7 +198,7 @@ export default function NotesView({ notes, setNotes }) {
 
       {/* New note form */}
       {showNew && (
-        <div className="bg-white rounded-2xl border-2 border-plum-300 p-5 space-y-3 shadow-sm">
+        <div className="bg-forest-500 rounded-2xl border-2 border-plum-300 p-5 space-y-3 shadow-sm">
           <input
             className="input font-serif text-lg"
             placeholder="Title (optional)"
@@ -214,7 +214,7 @@ export default function NotesView({ notes, setNotes }) {
             autoFocus
           />
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs text-plum-400 font-sans">Category:</span>
+            <span className="text-xs text-moon-300 font-sans">Category:</span>
             {CATEGORIES.map(cat => (
               <button
                 key={cat.id}
@@ -222,7 +222,7 @@ export default function NotesView({ notes, setNotes }) {
                 className={`text-xs font-sans px-3 py-1 rounded-full border transition-all ${
                   newNote.category === cat.id
                     ? cat.color + ' font-semibold'
-                    : 'bg-white text-plum-400 border-plum-200 hover:border-plum-300'
+                    : 'bg-forest-500 text-moon-300 border-plum-600 hover:border-plum-400'
                 }`}
               >
                 {cat.label}
@@ -254,11 +254,11 @@ export default function NotesView({ notes, setNotes }) {
         </div>
       ) : (
         <div className="card p-16 text-center">
-          <div className="w-14 h-14 rounded-full bg-plum-100 flex items-center justify-center mx-auto mb-4">
-            <Pencil className="w-6 h-6 text-plum-400" />
+          <div className="w-14 h-14 rounded-full bg-forest-500 flex items-center justify-center mx-auto mb-4">
+            <Pencil className="w-6 h-6 text-moon-300" />
           </div>
-          <h3 className="font-serif text-xl text-plum-700 mb-2">No notes yet</h3>
-          <p className="text-sm text-plum-400 font-sans mb-5">Jot down questions, ideas, or reminders as you plan.</p>
+          <h3 className="font-serif text-xl text-plum-50 mb-2">No notes yet</h3>
+          <p className="text-sm text-moon-300 font-sans mb-5">Jot down questions, ideas, or reminders as you plan.</p>
           <button onClick={() => setShowNew(true)} className="btn-primary inline-flex items-center gap-2">
             <Plus className="w-4 h-4" /> Write your first note
           </button>
