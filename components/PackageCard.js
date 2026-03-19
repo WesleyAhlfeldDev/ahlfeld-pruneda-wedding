@@ -19,6 +19,13 @@ export default function PackageCard({ pkg, onUpdate, onDelete }) {
     setEditing(false)
   }
 
+  function handleDelete(e) {
+    e.stopPropagation()
+    if (confirm(`Remove "${pkg.name}"? This cannot be undone.`)) {
+      onDelete(pkg.id)
+    }
+  }
+
   if (editing) {
     return (
       <div className="bg-plum-50 rounded-xl border border-plum-200 p-4 space-y-3">
@@ -79,13 +86,13 @@ export default function PackageCard({ pkg, onUpdate, onDelete }) {
   }
 
   return (
-    <div className="border border-plum-100 rounded-xl overflow-hidden bg-white hover:border-plum-200 transition-all group">
+    <div className="relative border border-plum-100 rounded-xl overflow-hidden bg-white hover:border-plum-200 transition-all group">
       {/* Accordion Header */}
       <button
         onClick={() => setOpen(o => !o)}
         className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-parchment transition-colors"
       >
-        <div className="flex items-center gap-4 flex-1 min-w-0 flex-wrap">
+        <div className="flex items-center gap-4 flex-1 min-w-0 flex-wrap pr-16">
           <span className="font-serif text-plum-800 text-base">{pkg.name}</span>
           <span className="font-serif text-plum-600 font-semibold text-sm whitespace-nowrap">
             {formatCurrency(pkg.price)}
@@ -102,20 +109,25 @@ export default function PackageCard({ pkg, onUpdate, onDelete }) {
           )}
         </div>
 
-        <div className="flex items-center gap-1 shrink-0">
-          <span className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity" onClick={e => e.stopPropagation()}>
-            <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-plum-100 text-plum-400 transition-colors">
-              <Pencil className="w-3.5 h-3.5" />
-            </button>
-            <button onClick={() => onDelete(pkg.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-plum-400 hover:text-red-400 transition-colors">
-              <Trash2 className="w-3.5 h-3.5" />
-            </button>
-          </span>
+        <div className="shrink-0">
           {open
             ? <ChevronUp className="w-4 h-4 text-plum-400" />
             : <ChevronDown className="w-4 h-4 text-plum-400" />}
         </div>
       </button>
+
+      {/* Action buttons — absolutely positioned so they never affect layout */}
+      <div
+        className="absolute right-10 top-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-lg px-1 py-0.5 shadow-sm"
+        onClick={e => e.stopPropagation()}
+      >
+        <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-plum-100 text-plum-400 transition-colors">
+          <Pencil className="w-3.5 h-3.5" />
+        </button>
+        <button onClick={handleDelete} className="p-1.5 rounded-lg hover:bg-red-50 text-plum-300 hover:text-red-400 transition-colors">
+          <Trash2 className="w-3.5 h-3.5" />
+        </button>
+      </div>
 
       {open && (
         <div className="px-5 pb-5 pt-1 border-t border-plum-50">

@@ -11,6 +11,12 @@ export default function AddOnRow({ addon, onUpdate, onDelete }) {
     setEditing(false)
   }
 
+  function handleDelete() {
+    if (confirm(`Remove "${addon.name}"? This cannot be undone.`)) {
+      onDelete(addon.id)
+    }
+  }
+
   if (editing) {
     return (
       <div className="px-4 py-3 bg-sage-100 space-y-2">
@@ -64,7 +70,7 @@ export default function AddOnRow({ addon, onUpdate, onDelete }) {
         <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-plum-100 text-plum-400 transition-colors">
           <Pencil className="w-3.5 h-3.5" />
         </button>
-        <button onClick={() => onDelete(addon.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-plum-300 hover:text-red-400 transition-colors">
+        <button onClick={handleDelete} className="p-1.5 rounded-lg hover:bg-red-50 text-plum-300 hover:text-red-400 transition-colors">
           <Trash2 className="w-3.5 h-3.5" />
         </button>
       </div>
