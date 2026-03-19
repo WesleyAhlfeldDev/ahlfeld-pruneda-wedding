@@ -63,98 +63,148 @@ function ComparisonCard({ comparison, allPackages, onUpdate, onDelete, index }) 
       </div>
 
       {leftPkg && rightPkg ? (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm font-sans table-fixed">
-            <colgroup>
-              <col style={{ width: '120px' }} />
-              <col style={{ width: '50%' }} />
-              <col style={{ width: '50%' }} />
-            </colgroup>
-            <thead>
-              <tr className="border-b border-plum-100">
-                <th className="text-left px-5 py-3 text-plum-400 font-medium text-xs uppercase tracking-wider">Detail</th>
-                <th className="text-left px-5 py-3">
-                  <p className="font-serif font-semibold text-plum-800 text-base">{leftPkg.name}</p>
-                  <p className="text-xs text-plum-400 font-normal">{leftVenue.name}</p>
-                  <p className="font-serif text-xl font-bold text-plum-600 mt-0.5">{formatCurrency(leftPkg.price)}</p>
-                </th>
-                <th className="text-left px-5 py-3">
-                  <p className="font-serif font-semibold text-plum-800 text-base">{rightPkg.name}</p>
-                  <p className="text-xs text-plum-400 font-normal">{rightVenue.name}</p>
-                  <p className="font-serif text-xl font-bold text-plum-600 mt-0.5">{formatCurrency(rightPkg.price)}</p>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-plum-50">
-              <tr className="bg-plum-50">
-                <td className="px-5 py-3 text-plum-400 text-xs uppercase tracking-wider font-medium">Price diff</td>
-                <td colSpan={2} className="px-5 py-3">
-                  {leftPkg.price === rightPkg.price ? (
-                    <span className="text-plum-400">Same price</span>
-                  ) : (
-                    <span className="font-semibold text-plum-600">
-                      {leftPkg.price < rightPkg.price ? leftPkg.name : rightPkg.name} is {formatCurrency(Math.abs(leftPkg.price - rightPkg.price))} less
-                    </span>
+        <div>
+          {/* Price diff banner */}
+          <div className="px-5 py-3 bg-plum-50 border-b border-plum-100 text-sm font-sans">
+            {leftPkg.price === rightPkg.price ? (
+              <span className="text-plum-400">Same price</span>
+            ) : (
+              <span className="font-semibold text-plum-600">
+                {leftPkg.price < rightPkg.price ? leftPkg.name : rightPkg.name} is {formatCurrency(Math.abs(leftPkg.price - rightPkg.price))} less
+              </span>
+            )}
+          </div>
+
+          {/* Mobile: stacked cards */}
+          <div className="sm:hidden divide-y divide-plum-50">
+            {[{ pkg: leftPkg, venue: leftVenue, label: 'Package A' }, { pkg: rightPkg, venue: rightVenue, label: 'Package B' }].map(({ pkg, venue, label }) => (
+              <div key={pkg.id} className="p-5 space-y-3">
+                <div>
+                  <p className="text-xs font-sans text-plum-400 uppercase tracking-wider mb-1">{label}</p>
+                  <p className="font-serif font-semibold text-plum-800 text-lg">{pkg.name}</p>
+                  <p className="text-xs text-plum-400 font-sans">{venue.name}</p>
+                  <p className="font-serif text-2xl font-bold text-plum-600 mt-1">{formatCurrency(pkg.price)}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <p className="text-xs text-plum-400 font-sans mb-0.5">Location</p>
+                    <p className="text-plum-700">{venue.location || '—'}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-plum-400 font-sans mb-0.5">Guests</p>
+                    <p className="text-plum-700">
+                      {pkg.guestCount > 0 ? `Up to ${pkg.guestCount}` : '—'}
+                      {pkg.extraGuestPrice > 0 && <span className="block text-xs text-plum-400">+{formatCurrency(pkg.extraGuestPrice)}/extra</span>}
+                    </p>
+                  </div>
+                  {pkg.hours > 0 && (
+                    <div>
+                      <p className="text-xs text-plum-400 font-sans mb-0.5">Hours</p>
+                      <p className="text-plum-700">{pkg.hours}h</p>
+                    </div>
                   )}
-                </td>
-              </tr>
-              <tr>
-                <td className="px-5 py-3 text-plum-400">Venue</td>
-                <td className="px-5 py-3 text-plum-700">{leftVenue.name}</td>
-                <td className="px-5 py-3 text-plum-700">{rightVenue.name}</td>
-              </tr>
-              <tr>
-                <td className="px-5 py-3 text-plum-400">Location</td>
-                <td className="px-5 py-3 text-plum-700">{leftVenue.location || '—'}</td>
-                <td className="px-5 py-3 text-plum-700">{rightVenue.location || '—'}</td>
-              </tr>
-              <tr>
-                <td className="px-5 py-3 text-plum-400">Guests</td>
-                <td className="px-5 py-3 text-plum-700">
-                  {leftPkg.guestCount > 0 ? `Up to ${leftPkg.guestCount}` : '—'}
-                  {leftPkg.extraGuestPrice > 0 && <span className="text-xs text-plum-400 ml-1">(+{formatCurrency(leftPkg.extraGuestPrice)}/extra)</span>}
-                </td>
-                <td className="px-5 py-3 text-plum-700">
-                  {rightPkg.guestCount > 0 ? `Up to ${rightPkg.guestCount}` : '—'}
-                  {rightPkg.extraGuestPrice > 0 && <span className="text-xs text-plum-400 ml-1">(+{formatCurrency(rightPkg.extraGuestPrice)}/extra)</span>}
-                </td>
-              </tr>
-              {(leftPkg.hours > 0 || rightPkg.hours > 0) && (
-                <tr>
-                  <td className="px-5 py-3 text-plum-400">Hours</td>
-                  <td className="px-5 py-3 text-plum-700">{leftPkg.hours > 0 ? `${leftPkg.hours}h` : '—'}</td>
-                  <td className="px-5 py-3 text-plum-700">{rightPkg.hours > 0 ? `${rightPkg.hours}h` : '—'}</td>
+                </div>
+                {(pkg.includes || []).length > 0 && (
+                  <div>
+                    <p className="text-xs text-plum-400 font-sans mb-2">Includes</p>
+                    <ul className="space-y-1.5">
+                      {(pkg.includes || []).map((item, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-plum-600">
+                          <span className="mt-0.5 w-4 h-4 rounded-full bg-sage-200 flex items-center justify-center shrink-0">
+                            <Check className="w-2.5 h-2.5 text-sage-500" />
+                          </span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: side-by-side table */}
+          <div className="hidden sm:block overflow-x-auto">
+            <table className="w-full text-sm font-sans table-fixed">
+              <colgroup>
+                <col style={{ width: '120px' }} />
+                <col style={{ width: '50%' }} />
+                <col style={{ width: '50%' }} />
+              </colgroup>
+              <thead>
+                <tr className="border-b border-plum-100">
+                  <th className="text-left px-5 py-3 text-plum-400 font-medium text-xs uppercase tracking-wider">Detail</th>
+                  <th className="text-left px-5 py-3">
+                    <p className="font-serif font-semibold text-plum-800 text-base">{leftPkg.name}</p>
+                    <p className="text-xs text-plum-400 font-normal">{leftVenue.name}</p>
+                    <p className="font-serif text-xl font-bold text-plum-600 mt-0.5">{formatCurrency(leftPkg.price)}</p>
+                  </th>
+                  <th className="text-left px-5 py-3">
+                    <p className="font-serif font-semibold text-plum-800 text-base">{rightPkg.name}</p>
+                    <p className="text-xs text-plum-400 font-normal">{rightVenue.name}</p>
+                    <p className="font-serif text-xl font-bold text-plum-600 mt-0.5">{formatCurrency(rightPkg.price)}</p>
+                  </th>
                 </tr>
-              )}
-              <tr>
-                <td className="px-5 py-3 text-plum-400 align-top">Includes</td>
-                <td className="px-5 py-3 align-top">
-                  <ul className="space-y-1.5">
-                    {(leftPkg.includes || []).map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-plum-600">
-                        <span className="mt-0.5 w-4 h-4 rounded-full bg-sage-200 flex items-center justify-center shrink-0">
-                          <Check className="w-2.5 h-2.5 text-sage-500" />
-                        </span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </td>
-                <td className="px-5 py-3 align-top">
-                  <ul className="space-y-1.5">
-                    {(rightPkg.includes || []).map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-plum-600">
-                        <span className="mt-0.5 w-4 h-4 rounded-full bg-sage-200 flex items-center justify-center shrink-0">
-                          <Check className="w-2.5 h-2.5 text-sage-500" />
-                        </span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-plum-50">
+                <tr>
+                  <td className="px-5 py-3 text-plum-400">Venue</td>
+                  <td className="px-5 py-3 text-plum-700">{leftVenue.name}</td>
+                  <td className="px-5 py-3 text-plum-700">{rightVenue.name}</td>
+                </tr>
+                <tr>
+                  <td className="px-5 py-3 text-plum-400">Location</td>
+                  <td className="px-5 py-3 text-plum-700">{leftVenue.location || '—'}</td>
+                  <td className="px-5 py-3 text-plum-700">{rightVenue.location || '—'}</td>
+                </tr>
+                <tr>
+                  <td className="px-5 py-3 text-plum-400">Guests</td>
+                  <td className="px-5 py-3 text-plum-700">
+                    {leftPkg.guestCount > 0 ? `Up to ${leftPkg.guestCount}` : '—'}
+                    {leftPkg.extraGuestPrice > 0 && <span className="text-xs text-plum-400 ml-1">(+{formatCurrency(leftPkg.extraGuestPrice)}/extra)</span>}
+                  </td>
+                  <td className="px-5 py-3 text-plum-700">
+                    {rightPkg.guestCount > 0 ? `Up to ${rightPkg.guestCount}` : '—'}
+                    {rightPkg.extraGuestPrice > 0 && <span className="text-xs text-plum-400 ml-1">(+{formatCurrency(rightPkg.extraGuestPrice)}/extra)</span>}
+                  </td>
+                </tr>
+                {(leftPkg.hours > 0 || rightPkg.hours > 0) && (
+                  <tr>
+                    <td className="px-5 py-3 text-plum-400">Hours</td>
+                    <td className="px-5 py-3 text-plum-700">{leftPkg.hours > 0 ? `${leftPkg.hours}h` : '—'}</td>
+                    <td className="px-5 py-3 text-plum-700">{rightPkg.hours > 0 ? `${rightPkg.hours}h` : '—'}</td>
+                  </tr>
+                )}
+                <tr>
+                  <td className="px-5 py-3 text-plum-400 align-top">Includes</td>
+                  <td className="px-5 py-3 align-top">
+                    <ul className="space-y-1.5">
+                      {(leftPkg.includes || []).map((item, i) => (
+                        <li key={i} className="flex items-start gap-2 text-plum-600">
+                          <span className="mt-0.5 w-4 h-4 rounded-full bg-sage-200 flex items-center justify-center shrink-0">
+                            <Check className="w-2.5 h-2.5 text-sage-500" />
+                          </span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </td>
+                  <td className="px-5 py-3 align-top">
+                    <ul className="space-y-1.5">
+                      {(rightPkg.includes || []).map((item, i) => (
+                        <li key={i} className="flex items-start gap-2 text-plum-600">
+                          <span className="mt-0.5 w-4 h-4 rounded-full bg-sage-200 flex items-center justify-center shrink-0">
+                            <Check className="w-2.5 h-2.5 text-sage-500" />
+                          </span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       ) : (
         <div className="px-5 py-8 text-center text-plum-300 font-sans text-sm">
