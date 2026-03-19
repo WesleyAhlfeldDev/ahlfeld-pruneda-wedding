@@ -42,14 +42,14 @@ export default function AddOnRow({ addon, onUpdate, onDelete }) {
   }
 
   return (
-    <div className="flex items-center gap-3 px-4 py-3 bg-white hover:bg-plum-50 transition-colors group">
+    <div className="relative flex items-center gap-3 px-4 py-3 bg-white hover:bg-plum-50 transition-colors group">
       <div className="flex-1 min-w-0">
         <span className="font-sans font-medium text-sm text-plum-700">{addon.name}</span>
         {addon.description && (
-          <span className="ml-2 text-xs text-plum-400 font-sans">{addon.description}</span>
+          <p className="text-xs text-plum-400 font-sans mt-0.5">{addon.description}</p>
         )}
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 shrink-0">
         {addon.perPerson && (
           <span className="flex items-center gap-1 text-xs text-plum-400 font-sans bg-plum-50 px-2 py-0.5 rounded-full whitespace-nowrap border border-plum-100">
             <Users className="w-3 h-3" /> per person
@@ -59,7 +59,8 @@ export default function AddOnRow({ addon, onUpdate, onDelete }) {
           {formatCurrency(addon.price)}
         </span>
       </div>
-      <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+      {/* Action buttons — absolutely positioned so they never affect layout */}
+      <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-lg px-1 py-0.5 shadow-sm">
         <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-plum-100 text-plum-400 transition-colors">
           <Pencil className="w-3.5 h-3.5" />
         </button>
