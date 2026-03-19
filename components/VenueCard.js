@@ -122,8 +122,8 @@ export default function VenueCard({ venue, onUpdate, onDelete, isHighlighted }) 
         </div>
       </div>
 
-      {/* Edit/Delete — absolutely positioned on hover so they never affect layout */}
-      <div className="absolute top-4 left-4 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-lg px-1 py-0.5 shadow-sm z-10">
+      {/* Edit/Delete — hidden on mobile, absolutely positioned on hover for desktop */}
+      <div className="hidden sm:flex absolute top-4 left-4 gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-lg px-1 py-0.5 shadow-sm z-10">
         <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-plum-50 text-plum-400 hover:text-plum-600 transition-colors">
           <Pencil className="w-4 h-4" />
         </button>
