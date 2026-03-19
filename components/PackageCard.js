@@ -116,9 +116,9 @@ export default function PackageCard({ pkg, onUpdate, onDelete }) {
         </div>
       </button>
 
-      {/* Action buttons — absolutely positioned so they never affect layout */}
+      {/* Action buttons — hidden on mobile, absolutely positioned on hover for desktop */}
       <div
-        className="absolute right-10 top-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-lg px-1 py-0.5 shadow-sm"
+        className="hidden sm:flex absolute right-10 top-3 gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-lg px-1 py-0.5 shadow-sm"
         onClick={e => e.stopPropagation()}
       >
         <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-plum-100 text-plum-400 transition-colors">

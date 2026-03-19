@@ -65,8 +65,8 @@ export default function AddOnRow({ addon, onUpdate, onDelete }) {
           {formatCurrency(addon.price)}
         </span>
       </div>
-      {/* Action buttons — absolutely positioned so they never affect layout */}
-      <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-lg px-1 py-0.5 shadow-sm">
+      {/* Action buttons — hidden on mobile, absolutely positioned on hover for desktop */}
+      <div className="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-lg px-1 py-0.5 shadow-sm">
         <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-plum-100 text-plum-400 transition-colors">
           <Pencil className="w-3.5 h-3.5" />
         </button>
