@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Nunito:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #faf7f2;
+  color: #2a162a;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-plum-600 text-white px-5 py-2.5 rounded-full font-sans font-medium text-sm hover:bg-plum-700 transition-all duration-200 shadow-sm hover:shadow-md;
+  }
+  .btn-secondary {
+    @apply border border-plum-300 text-plum-600 px-5 py-2.5 rounded-full font-sans font-medium text-sm hover:bg-plum-50 transition-all duration-200;
+  }
+  .btn-ghost {
+    @apply text-plum-500 px-4 py-2 rounded-full font-sans font-medium text-sm hover:bg-plum-50 transition-all duration-200;
+  }
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-plum-100 overflow-hidden;
+  }
+  .input {
+    @apply w-full border border-plum-200 rounded-xl px-4 py-2.5 font-sans text-sm text-plum-900 focus:outline-none focus:ring-2 focus:ring-plum-300 focus:border-transparent bg-white placeholder-plum-300 transition-all;
+  }
+  .label {
+    @apply block font-sans font-medium text-plum-700 text-sm mb-1.5;
+  }
+  .section-title {
+    @apply font-serif text-2xl text-plum-800 font-semibold;
+  }
+  .tag {
+    @apply inline-flex items-center gap-1 bg-sage-100 text-sage-500 text-xs font-sans font-medium px-2.5 py-1 rounded-full;
+  }
+  .tag-blush {
+    @apply inline-flex items-center gap-1 bg-blush-100 text-blush-500 text-xs font-sans font-medium px-2.5 py-1 rounded-full;
+  }
+}
+
+/* Decorative divider */
+.floral-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #be92bf;
+}
+.floral-divider::before,
+.floral-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #d9bfda, transparent);
+}
+
+/* Subtle pattern background */
+.pattern-bg {
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(190,146,191,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(237,185,138,0.06) 0%, transparent 40%);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #faf7f2; }
+::-webkit-scrollbar-thumb { background: #d9bfda; border-radius: 3px; }

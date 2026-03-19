@@ -1,0 +1,546 @@
+{
+  "venues": [
+    {
+      "id": "venue-dreams-royal-beach",
+      "name": "Dreams Royal Beach Punta Cana",
+      "location": "Punta Cana, Dominican Republic",
+      "capacity": 300,
+      "website": "https://www.dreamsresorts.com/dreams-royal-beach",
+      "notes": "All-inclusive Dreams Resorts & Spas property (World of Hyatt Inclusive Collection). Taxes & gratuities included in all romance packages. Must book min. 30 days in advance. Prices shown are Dec 21, 2026–Dec 20, 2027, Mon–Wed (lowest tier). Thu–Sun and Nov–Jul dates are higher — ask coordinator for full matrix.",
+      "packages": [
+        {
+          "id": "pkg-drb-elope",
+          "name": "Elope in Luxury",
+          "price": 1599,
+          "guestCount": 2,
+          "hours": 0,
+          "includes": [
+            "Service of a dedicated on-site wedding coordinator",
+            "Sparkling wine & fresh fruit in room/suite upon arrival",
+            "Hairstyling & makeup application for one member of the wedding couple",
+            "Bouquet(s) and/or boutonniere(s) for the wedding couple",
+            "Preparation and ironing of couple's wedding day attire",
+            "Symbolic ceremony (officiant NOT included)",
+            "20 digital photos of the wedding ceremony",
+            "Wedding cake and sparkling wine toast for two",
+            "Romantic dining arrangements for two the night of the ceremony",
+            "Special turndown service the night of the wedding",
+            "15% off spa treatments (boutique purchases not included)",
+            "Complimentary hydrotherapy circuit treatment for the couple",
+            "Breakfast-in-bed with mimosas (concierge reservation required)",
+            "Late check-out for the couple (based on availability)",
+            "Free anniversary nights (2 free nights with 5+ paid nights on anniversary)",
+            "Complimentary room upgrade for the couple (based on availability)",
+            "Package for 2 pax ONLY — cannot be combined with other complimentary packages"
+          ]
+        },
+        {
+          "id": "pkg-drb-infinitely-yours",
+          "name": "Infinitely Yours (Vow Renewal)",
+          "price": 749,
+          "guestCount": 2,
+          "hours": 0,
+          "includes": [
+            "Wedding organization and personal touch of on-site coordinator",
+            "Vow renewal ceremony",
+            "Corsage(s) and/or boutonniere(s) for the wedding couple",
+            "Sparkling wine toast for two",
+            "Certificate of renewed vows",
+            "Special dining arrangements for two the evening of ceremony",
+            "Anniversary Package: welcome letter, fresh fruit, bottle of sparkling wine",
+            "Special turndown service one evening during stay",
+            "Breakfast in bed with mimosas (concierge reservation required)",
+            "15% off spa treatments (boutique purchases not included)",
+            "COMPLIMENTARY when booking 5+ nights in Preferred Club Junior Suite Swim Out or higher",
+            "Extra pax (max 6): $5/chair, $5/sparkling wine toast"
+          ]
+        },
+        {
+          "id": "pkg-drb-wedding-in-paradise",
+          "name": "Wedding in Paradise",
+          "price": 1499,
+          "guestCount": 10,
+          "hours": 0,
+          "includes": [
+            "Symbolic ceremony (performed by on-site coordinator)",
+            "Wedding organization and personal touch of on-site coordinator",
+            "Preparation and ironing of couple's wedding day attire",
+            "Complimentary room for one member of the couple the night before the wedding (based on availability)",
+            "Bouquet(s) and/or boutonniere(s) for the wedding couple",
+            "Wedding cake and sparkling wine toast (up to 10 guests)",
+            "Special turndown service the night of the wedding",
+            "15% off spa treatments (boutique purchases not included)",
+            "Newlywed Package: welcome letter, fresh fruit, bottle of sparkling wine, breakfast in bed with mimosas",
+            "Late checkout for the couple (based on availability)",
+            "Free anniversary nights (2 free with 5+ paid nights, or 1 free with 4 paid)",
+            "Set up: 10 chairs with ceremonial table",
+            "COMPLIMENTARY with 7+ nights Preferred Club Jr Suite Swim Out or higher, OR 5 rooms (any category) for 3+ nights",
+            "Extra pax: $5/chair, $5/sparkling wine, $10/cake"
+          ]
+        },
+        {
+          "id": "pkg-drb-eternal-love",
+          "name": "Eternal Love",
+          "price": 4849,
+          "guestCount": 20,
+          "hours": 0,
+          "includes": [
+            "Service of judge or minister",
+            "Semi-private rehearsal dinner for up to 20 (set menu required)",
+            "Wedding organization and personal touch of on-site coordinator",
+            "Preparation and ironing of couple's wedding day attire",
+            "Complimentary room for one member of the couple the night before",
+            "Bouquet(s) and/or boutonniere(s) for the wedding couple",
+            "Two boutonnieres and two corsages for the wedding party",
+            "Sound system with speaker and microphones",
+            "Hairstyling & makeup application for one member of the couple",
+            "Ceremony décor: 20 white Avant garden chairs, ceremonial table, tropical floral centerpiece, aisle runner",
+            "Wedding cake and sparkling wine for up to 20 guests",
+            "Private cocktail hour with hors d'oeuvres — Gold menu, up to 20 guests (3 high cocktail tables)",
+            "Private dinner reception — Gold menu, up to 20 guests (round tables, white linens, white folding chairs, standard glassware & silverware, sweetheart table with tropical floral centerpiece, cake table, guest book table)",
+            "One natural floral centerpiece for the sweetheart table",
+            "One natural floral centerpiece for the ceremonial table",
+            "Live music — one set during cocktail hour",
+            "Special turndown service the night of the wedding",
+            "15% off spa treatments (boutique purchases not included)",
+            "Newlywed Package: welcome letter, fresh fruit, sparkling wine, breakfast in bed with mimosas",
+            "Late checkout for the couple (based on availability)",
+            "50 full-color photos and wedding album",
+            "Video of ceremony (30 minutes)",
+            "Choice of one couple's spa treatment",
+            "Free anniversary nights (2 free with 5+ paid nights, or 1 free with 4 paid)"
+          ]
+        },
+        {
+          "id": "pkg-drb-beyond-memorable",
+          "name": "Beyond Memorable",
+          "price": 11499,
+          "guestCount": 79,
+          "hours": 0,
+          "includes": [
+            "Wedding organization and personal touch of on-site coordinator",
+            "Welcome cocktail party — 1 hour event",
+            "Hors d'oeuvres station (4 selections) + 1 hour open bar",
+            "Rehearsal dinner — 2 hour event",
+            "Signature cocktail selected by the couple",
+            "Sumptuous buffet with choice of cuisine options",
+            "Dessert station (2 options)",
+            "Appetizers station (3 options)",
+            "Symbolic ceremony (private event)",
+            "Preparation and ironing of couple's wedding day attire",
+            "Beach pergola or wedding gazebo drapery",
+            "Bouquet(s) and/or boutonniere(s) for the wedding couple",
+            "White-linen covered chairs for guests",
+            "Shoe check station (for beach ceremonies)",
+            "Wedding reception — 3 hour private event",
+            "Sweetheart table for the couple with upgraded linens",
+            "Sound system with speaker and microphone",
+            "Delectable buffet with variety of cuisine options",
+            "Private bar with bartender",
+            "Dessert station and couple's choice of wedding cake",
+            "Sparkling wine & fresh fruit for the couple and their parents (up to 3 rooms)",
+            "20% off spa treatments for couple and parents (up to 6 people)",
+            "Complimentary hydrotherapy access for couple and parents on one day",
+            "Complimentary room for one member of the couple the night before",
+            "Romantic turndown service the evening of the wedding",
+            "Romantic breakfast in bed with mimosas the day after",
+            "Late checkout for the couple (based on availability, until 3pm)",
+            "Free anniversary nights",
+            "$100 resort coupons per guest",
+            "Prices include up to 79 guests — buffet style dinner only",
+            "Requires minimum 75 cumulative paid room nights"
+          ]
+        }
+      ],
+      "addons": [
+        {
+          "id": "ao-drb-location-seagrill",
+          "name": "Sea Side Grill Restaurant Location Fee",
+          "price": 2500,
+          "description": "Required for Sea Side Grill — not included in packages. 100 pax max, 11 tables, wheelchair accessible, receptions 7pm–11pm. Lighting recommended."
+        },
+        {
+          "id": "ao-drb-location-mangrove",
+          "name": "Mangrove Gazebo Location Fee",
+          "price": 1000,
+          "description": "Required for Mangrove Gazebo if using Wedding in Paradise, Elope Luxury, or Infinitely Yours package. 80 pax max, wheelchair access, ceremony/cocktail only, available until 7pm."
+        },
+        {
+          "id": "ao-drb-photo-larimar",
+          "name": "WBA Studio Photo – Larimar",
+          "price": 650,
+          "description": "1.5hr coverage. Ceremony & photo session. 70 digital photos, online gallery, ready in 4-6 weeks."
+        },
+        {
+          "id": "ao-drb-photo-passion",
+          "name": "WBA Studio Photo – Passion of Love",
+          "price": 1300,
+          "description": "3hr coverage. Getting ready, ceremony, photo session. 130 digital photos, online gallery, ready in 4-6 weeks."
+        },
+        {
+          "id": "ao-drb-photo-gold",
+          "name": "WBA Studio Photo – Gold Secrets",
+          "price": 2200,
+          "description": "5hr coverage. Getting ready, ceremony, photo session, beginning of reception. 220 digital photos, online gallery, ready in 4-6 weeks."
+        },
+        {
+          "id": "ao-drb-photo-luxury",
+          "name": "WBA Studio Photo – Luxury",
+          "price": 2800,
+          "description": "7hr coverage. Getting ready, ceremony, photo session, full reception. 400 digital photos, online gallery, ready in 4-6 weeks."
+        },
+        {
+          "id": "ao-drb-photo-pearl",
+          "name": "WBA Studio Photo – Pearl",
+          "price": 5000,
+          "description": "7hr, 2 photographers. All digital photos + Wedding Album 8x10. Online gallery, ready in 4-8 weeks."
+        },
+        {
+          "id": "ao-drb-photo-extra-hour",
+          "name": "WBA Studio – Extra Photography Hour",
+          "price": 330,
+          "description": "Add one additional hour of photo coverage."
+        },
+        {
+          "id": "ao-drb-photo-album",
+          "name": "WBA Studio – Wedding Album 8x10 Hard Cover",
+          "price": 250,
+          "description": "Add-on album for any photo package."
+        },
+        {
+          "id": "ao-drb-photo-ttd",
+          "name": "WBA Studio – Trash the Dress Session",
+          "price": 450,
+          "description": "Separate TTD photo session."
+        },
+        {
+          "id": "ao-drb-photo-sunrise-ttd",
+          "name": "WBA Studio – Sunrise Trash the Dress Session",
+          "price": 600,
+          "description": "Sunrise TTD session."
+        },
+        {
+          "id": "ao-drb-video-ceremony",
+          "name": "WBA Studio Video – Ceremony",
+          "price": 450,
+          "description": "Up to 30min ceremony coverage. 1 videographer. Online download, ready in 2-4 weeks."
+        },
+        {
+          "id": "ao-drb-video-ambar",
+          "name": "WBA Studio Video – Ambar",
+          "price": 1200,
+          "description": "3hr coverage. Getting ready, ceremony, photo session recording. Online download, ready in 2-4 weeks."
+        },
+        {
+          "id": "ao-drb-video-diamond",
+          "name": "WBA Studio Video – Diamond",
+          "price": 1700,
+          "description": "5hr coverage. Getting ready, ceremony, photo session, beginning of reception. Online download, ready in 2-4 weeks."
+        },
+        {
+          "id": "ao-drb-video-platinum",
+          "name": "WBA Studio Video – Platinum",
+          "price": 2100,
+          "description": "7hr coverage. Getting ready, ceremony, photo session, full reception. Online download, ready in 2-4 weeks."
+        },
+        {
+          "id": "ao-drb-video-cinematic",
+          "name": "WBA Studio Video – Cinematic Love",
+          "price": 4000,
+          "description": "7hr, 2 videographers. Getting ready, ceremony, photo session, reception. Drone + highlight reel (3-5 min). Online download, ready in 4-6 weeks."
+        },
+        {
+          "id": "ao-drb-video-highlight",
+          "name": "WBA Studio Video – Highlight Reel Add-on",
+          "price": 350,
+          "description": "Add a highlight video to any video package."
+        },
+        {
+          "id": "ao-drb-video-drone",
+          "name": "WBA Studio Video – Drone Service",
+          "price": 350,
+          "description": "Add drone footage to any video package."
+        },
+        {
+          "id": "ao-drb-video-raw",
+          "name": "WBA Studio Video – Raw Footage",
+          "price": 400,
+          "description": "Add raw video footage to any video package."
+        },
+        {
+          "id": "ao-drb-extra-guest-cocktail",
+          "name": "Extra Guest – Cocktail Hour",
+          "price": 23,
+          "perPerson": true,
+          "description": "Eternal Love / Beyond Memorable: $18 + 28% taxes = ~$23/person. Children 3-12: ~$12."
+        },
+        {
+          "id": "ao-drb-extra-guest-dinner-sitdown",
+          "name": "Extra Guest – Sit-Down Dinner",
+          "price": 51,
+          "perPerson": true,
+          "description": "Eternal Love / Beyond Memorable: $40 + 28% taxes = ~$51/person. Children 3-12: ~$26."
+        },
+        {
+          "id": "ao-drb-extra-guest-dinner-buffet",
+          "name": "Extra Guest – Buffet Dinner",
+          "price": 64,
+          "perPerson": true,
+          "description": "Beyond Memorable: $50 + 28% taxes = ~$64/person. Children 3-12: ~$32."
+        }
+      ]
+    },
+    {
+      "id": "venue-hyatt-ziva-zilara",
+      "name": "Hyatt Ziva & Zilara Cap Cana",
+      "location": "Cap Cana, Dominican Republic",
+      "capacity": 600,
+      "website": "https://www.hyatt.com/hyatt-ziva/en-US/pcazc-hyatt-ziva-cap-cana",
+      "notes": "Two connected resorts sharing wedding team. Contact: Jouberkys Mercedes (Wedding Manager) — Jouberkys.mercedes@hyatt.com | Office: +1 (809) 469-7090 ext. 7318 | Toll-free: 1 (833) 577-0935. Outdoor events end by 11pm. Outside photography/video vendors NOT allowed. Other outside vendors: $1,500/service fee. Thu–Sun weddings require an upgraded package.",
+      "packages": [
+        {
+          "id": "pkg-hzz-just-two",
+          "name": "Just the Two of You",
+          "price": 729,
+          "guestCount": 2,
+          "hours": 0,
+          "extraGuestPrice": 0,
+          "includes": [
+            "Pre-planning & on-site services of a professional wedding specialist",
+            "Complimentary online wedding registry & wedding website",
+            "Wedding location",
+            "Symbolic marriage ceremony & certificate — bilingual secular officiant",
+            "Bouquets and/or boutonnieres for the couple (white roses or tropical flowers)",
+            "Sparkling wine toast after the ceremony for the couple",
+            "Signature wedding cake",
+            "Special room decoration with petals and complimentary wine",
+            "Late check-out for the couple up to 3pm (subject to availability)",
+            "COMPLIMENTARY with 7+ nights in Club Ocean View Junior Suite or higher",
+            "Available Mon–Wed only (10am–2pm) — must be booked within 6 months of wedding date",
+            "Package for 2 pax ONLY — no additional guests"
+          ]
+        },
+        {
+          "id": "pkg-hzz-intimate",
+          "name": "Intimate Elegance",
+          "price": 1890,
+          "guestCount": 12,
+          "hours": 0,
+          "extraGuestPrice": 55,
+          "includes": [
+            "Pre-planning & on-site services of a professional wedding specialist",
+            "Complimentary online wedding registry & website",
+            "Wedding location",
+            "Symbolic marriage ceremony & certificate — bilingual secular officiant",
+            "Ceremony table with white linen and folding white chairs for guests",
+            "Basic sound system for the ceremony",
+            "Bouquets and/or boutonnieres for the couple (white roses or tropical flowers)",
+            "Sparkling wine toast after the ceremony",
+            "Signature wedding cake",
+            "Special room decoration with petals and complimentary wine",
+            "Romantic dinner for the wedding couple",
+            "Massage for the wedding couple",
+            "Late check-out for the couple up to 3pm (subject to availability)",
+            "COMPLIMENTARY with 25+ room nights (3-night min/room) in Club Ocean View Junior Suite or higher",
+            "Available Mon–Wed only (10am–2pm) — must book within 6 months of date",
+            "Extra adult: $55 | Extra child (3–12): $40"
+          ]
+        },
+        {
+          "id": "pkg-hzz-lavish",
+          "name": "Lavish & Opulent",
+          "price": 7129,
+          "guestCount": 22,
+          "hours": 4,
+          "extraGuestPrice": 140,
+          "includes": [
+            "Pre-planning & on-site services of a professional wedding coordinator",
+            "Complimentary online bridal registry & wedding website",
+            "Wedding location",
+            "Symbolic marriage ceremony & certificate — bilingual officiant",
+            "Ceremony table with white linen and folding wedding chairs for guests",
+            "Fresh floral centerpiece for the altar (white roses or tropical flowers)",
+            "Bouquets and/or boutonnieres for the couple (white roses or tropical flowers)",
+            "One (1) boutonniere and one (1) corsage for the wedding party",
+            "Basic sound system for the ceremony",
+            "Sparkling wine toast after the ceremony",
+            "Signature wedding cake",
+            "Romantic dinner for the wedding couple",
+            "Private 1-hour cocktail party — open bar & hors d'oeuvres, standard setup",
+            "Private 3-hour wedding reception — buffet or plated dinner*, open bar, standard setup",
+            "Special turndown service on the wedding night",
+            "Sparkling wine and romantic dessert delivered to couple's room the night of the wedding",
+            "Hair-styling and makeup for one (1) member of the couple",
+            "Manicure and pedicure for one (1) member of the couple",
+            "15% discount on spa services for the wedding couple",
+            "10% discount on spa services for the wedding guests",
+            "25-minute massage for the wedding couple",
+            "Late check-out for the couple up to 3pm (subject to availability)",
+            "One (1) complimentary room night on 1st anniversary (min 4-night stay required)",
+            "Mon–Wed all day / Thu–Sun before 4pm: $7,129 | Thu–Sun after 4pm: $7,665",
+            "Booking deposit: $1,000 non-refundable",
+            "Extra adult: $140 | Extra child (3–12): $85"
+          ]
+        },
+        {
+          "id": "pkg-hzz-luxury",
+          "name": "Luxury Package",
+          "price": 22150,
+          "guestCount": 40,
+          "hours": 4,
+          "extraGuestPrice": 159,
+          "includes": [
+            "Complimentary online registry, website & on-site services",
+            "VIP status for the wedding couple",
+            "Tropical floral arrangement, bottle of champagne & fruit basket in couple's room upon arrival",
+            "Complimentary bathrobes & slippers for the couple during their stay",
+            "Pressing of the couple's wedding attire",
+            "Hair-styling and makeup for one (1) member of the couple",
+            "Manicure and pedicure for one (1) member of the couple",
+            "Symbolic marriage ceremony & certificate — secular and bilingual officiant",
+            "Decorated beach location or ocean front gazebo",
+            "Ceremony table with white linen and white folding chairs",
+            "Fresh floral centerpiece for the altar (white roses or tropical flowers)",
+            "Bouquets and/or boutonnieres for the couple",
+            "Two (2) mini bouquets, three (3) boutonnieres, two (2) corsages for bridal party",
+            "Basic sound system for the ceremony",
+            "Professional photographer during the ceremony (50 digital photos included)",
+            "Video services during the ceremony",
+            "Sparkling wine toast after the ceremony",
+            "Signature wedding cake with three (3) floral decorations",
+            "Private 1-hour cocktail party — open bar & hors d'oeuvres, standard setup",
+            "Solo musician (live music) — 1 set during cocktail hour",
+            "Private 3-hour wedding reception — 3-course meal, open bar, standard setup",
+            "Personalized menu card per table for the reception",
+            "Four (4) basic centerpieces for reception tables (white roses or tropical flowers)",
+            "DJ and MC service for 3 hours (dance floor not included)",
+            "Room decoration with flower petals and complimentary wine the night of the wedding",
+            "Honeymoon breakfast in bed the morning after the ceremony",
+            "50-minute massage for the wedding couple",
+            "Private romantic dinner on the beach for the wedding couple",
+            "15% discount on spa services for the wedding couple",
+            "10% discount on spa services for the wedding guests",
+            "Late checkout until 6:00pm (subject to availability)",
+            "Mon–Wed all day / Thu–Sun before 4pm: $22,150 | Thu–Sun after 4pm: $22,749",
+            "Booking deposit: $2,000 non-refundable",
+            "Extra adult: $159 | Extra child (3–12): $89"
+          ]
+        }
+      ],
+      "addons": [
+        {
+          "id": "ao-hzz-venue-zilara-gazebo",
+          "name": "Zilara Beach Gazebo",
+          "price": 0,
+          "perPerson": false,
+          "description": "Up to 120 pax. Ceremony location. Flowers & décor at additional cost. Hyatt Zilara side."
+        },
+        {
+          "id": "ao-hzz-venue-ziva-gazebo",
+          "name": "Ziva Beach Gazebo",
+          "price": 0,
+          "perPerson": false,
+          "description": "Up to 150 pax. Ceremony location. Flowers & décor at additional cost. Hyatt Ziva side."
+        },
+        {
+          "id": "ao-hzz-venue-beach",
+          "name": "Beach Area",
+          "price": 0,
+          "perPerson": false,
+          "description": "Up to 600 pax. Ceremony, cocktail & reception. Buffet dinner required outdoors. Flowers & décor extra."
+        },
+        {
+          "id": "ao-hzz-venue-rooftop",
+          "name": "Rooftop Terrace Location Fee",
+          "price": 1500,
+          "perPerson": false,
+          "description": "Hyatt Ziva only. 100 pax ceremony, 80 pax cocktail/reception, 100 pax dinner. Buffet required. Cannot combine with Zilara Gazebo."
+        },
+        {
+          "id": "ao-hzz-venue-waves-lawn",
+          "name": "Waves Lawn",
+          "price": 0,
+          "perPerson": false,
+          "description": "Adults only. Up to 110 pax. Hyatt Zilara. Buffet required. Flowers & décor extra."
+        },
+        {
+          "id": "ao-hzz-venue-santiago-lawn",
+          "name": "Santiago Lawn",
+          "price": 0,
+          "perPerson": false,
+          "description": "Adults only. Up to 40 pax. Hyatt Zilara. Buffet required. Flowers & décor extra."
+        },
+        {
+          "id": "ao-hzz-civil-ceremony",
+          "name": "Legal / Civil Ceremony Fee",
+          "price": 1500,
+          "perPerson": false,
+          "description": "Government surcharge for legal/civil ceremonies (2027). Documents must be apostilled & translated. Certificate delivery up to 15 weeks."
+        },
+        {
+          "id": "ao-hzz-outside-vendor",
+          "name": "Outside Vendor Fee (per service)",
+          "price": 1500,
+          "perPerson": false,
+          "description": "Per outside vendor service (décor, DJ, AV, etc.). Photography & video outside vendors NOT permitted. Covers 1 person for 1 day."
+        },
+        {
+          "id": "ao-hzz-extra-adult-intimate",
+          "name": "Extra Adult Guest — Intimate Elegance",
+          "price": 55,
+          "perPerson": true,
+          "description": "Per additional adult beyond 12 included in Intimate Elegance package."
+        },
+        {
+          "id": "ao-hzz-extra-child-intimate",
+          "name": "Extra Child (3–12) — Intimate Elegance",
+          "price": 40,
+          "perPerson": true,
+          "description": "Per additional child (age 3–12) beyond 12 included in Intimate Elegance package."
+        },
+        {
+          "id": "ao-hzz-extra-adult-lavish",
+          "name": "Extra Adult Guest — Lavish & Opulent",
+          "price": 140,
+          "perPerson": true,
+          "description": "Per additional adult beyond 22 included in Lavish & Opulent package."
+        },
+        {
+          "id": "ao-hzz-extra-child-lavish",
+          "name": "Extra Child (3–12) — Lavish & Opulent",
+          "price": 85,
+          "perPerson": true,
+          "description": "Per additional child (age 3–12) beyond 22 included in Lavish & Opulent package."
+        },
+        {
+          "id": "ao-hzz-extra-adult-luxury",
+          "name": "Extra Adult Guest — Luxury",
+          "price": 159,
+          "perPerson": true,
+          "description": "Per additional adult beyond 40 included in Luxury package."
+        },
+        {
+          "id": "ao-hzz-extra-child-luxury",
+          "name": "Extra Child (3–12) — Luxury",
+          "price": 89,
+          "perPerson": true,
+          "description": "Per additional child (age 3–12) beyond 40 included in Luxury package."
+        },
+        {
+          "id": "ao-hzz-thu-sun-upgrade-lavish",
+          "name": "Thu–Sun After 4pm Surcharge — Lavish & Opulent",
+          "price": 536,
+          "perPerson": false,
+          "description": "Upgrade from $7,129 to $7,665 for Thursday–Sunday weddings after 4pm."
+        },
+        {
+          "id": "ao-hzz-thu-sun-upgrade-luxury",
+          "name": "Thu–Sun After 4pm Surcharge — Luxury",
+          "price": 599,
+          "perPerson": false,
+          "description": "Upgrade from $22,150 to $22,749 for Thursday–Sunday weddings after 4pm."
+        }
+      ]
+    }
+  ]
+}
