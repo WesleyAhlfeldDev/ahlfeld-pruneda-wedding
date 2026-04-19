@@ -1,12 +1,13 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import Head from 'next/head'
-import { Plus, LayoutList, GitCompare, Calculator, Download, Upload, Heart, Sparkles, NotebookPen, ListChecks, Cloud, HardDrive } from 'lucide-react'
+import { Plus, LayoutList, GitCompare, Calculator, Download, Upload, Heart, Sparkles, NotebookPen, ListChecks, Cloud, HardDrive, Users } from 'lucide-react'
 import VenueCard from '../components/VenueCard'
 import VenueForm from '../components/VenueForm'
 import PriceEstimator from '../components/PriceEstimator'
 import CompareView from '../components/CompareView'
 import NotesView from '../components/NotesView'
 import TodoView from '../components/TodoView'
+import GuestsView from '../components/GuestsView'
 import { loadFromDB, saveToDB, subscribeToChanges, saveToLocal, isUsingSupabase, emptyState } from '../lib/db'
 import { DEFAULT_DATA } from '../lib/data'
 
@@ -14,6 +15,7 @@ const TABS = [
   { id: 'venues', label: 'Venues', icon: LayoutList },
   { id: 'compare', label: 'Compare', icon: GitCompare },
   { id: 'estimate', label: 'Estimate', icon: Calculator },
+  { id: 'guests', label: 'Guests', icon: Users },
   { id: 'todos', label: 'To-Do', icon: ListChecks },
   { id: 'notes', label: 'Notes', icon: NotebookPen },
 ]
@@ -26,6 +28,7 @@ export default function Home() {
   const [estimate, setEstimate] = useState(emptyState().estimate)
   const [notes, setNotes] = useState([])
   const [todos, setTodos] = useState([])
+  const [guests, setGuests] = useState([])
   const [tab, setTab] = useState('venues')
   const [showAddVenue, setShowAddVenue] = useState(false)
   const [highlightedId, setHighlightedId] = useState(null)
@@ -45,6 +48,7 @@ export default function Home() {
       setEstimate(d.estimate || emptyState().estimate)
       setNotes(d.notes || [])
       setTodos(d.todos || [])
+      setGuests(d.guests || [])
       setLoaded(true)
     })
   }, [])
@@ -55,7 +59,7 @@ export default function Home() {
       isRemoteUpdate.current = false
       return
     }
-    const state = { venues, guestCount, weddingDate, comparisons, estimate, notes, todos }
+    const state = { venues, guestCount, weddingDate, comparisons, estimate, notes, todos, guests }
     clearTimeout(saveTimeout.current)
     saveTimeout.current = setTimeout(async () => {
       setSyncing(true)
@@ -64,7 +68,7 @@ export default function Home() {
       setSyncing(false)
     }, 800)
     return () => clearTimeout(saveTimeout.current)
-  }, [venues, guestCount, weddingDate, comparisons, estimate, notes, todos, loaded])
+  }, [venues, guestCount, weddingDate, comparisons, estimate, notes, todos, guests, loaded])
 
   // Real-time subscription
   useEffect(() => {
@@ -78,6 +82,7 @@ export default function Home() {
       setEstimate(d.estimate || emptyState().estimate)
       setNotes(d.notes || [])
       setTodos(d.todos || [])
+      setGuests(d.guests || [])
     })
     return unsub
   }, [])
@@ -85,11 +90,11 @@ export default function Home() {
   // Save before unload
   useEffect(() => {
     if (!loaded) return
-    const state = { venues, guestCount, weddingDate, comparisons, estimate, notes, todos }
+    const state = { venues, guestCount, weddingDate, comparisons, estimate, notes, todos, guests }
     const handle = () => { saveToLocal(state); saveToDB(state) }
     window.addEventListener('beforeunload', handle)
     return () => window.removeEventListener('beforeunload', handle)
-  }, [loaded, venues, guestCount, weddingDate, comparisons, estimate, notes, todos])
+  }, [loaded, venues, guestCount, weddingDate, comparisons, estimate, notes, todos, guests])
 
   const daysUntil = useMemo(() => {
     if (!weddingDate) return null
@@ -228,6 +233,9 @@ export default function Home() {
                   {t.id === 'compare' && venues.length >= 2 && (
                     <span className={`text-xs px-1.5 py-0.5 rounded-full ${tab === t.id ? 'bg-forest-6000' : 'bg-forest-500 text-white0'}`}>{venues.length}</span>
                   )}
+                  {t.id === 'guests' && guests.length > 0 && (
+                    <span className={`text-xs px-1.5 py-0.5 rounded-full ${tab === t.id ? 'bg-plum-600' : 'bg-forest-400 text-moon-300'}`}>{guests.length}</span>
+                  )}
                   {t.id === 'todos' && activeTodos > 0 && (
                     <span className={`text-xs px-1.5 py-0.5 rounded-full ${tab === t.id ? 'bg-forest-6000' : 'bg-amber-100 text-amber-600'}`}>{activeTodos}</span>
                   )}
@@ -272,6 +280,7 @@ export default function Home() {
               <PriceEstimator venues={venues} globalGuestCount={guestCount} estimate={estimate} setEstimate={setEstimate} />
             </div>
           )}
+          {tab === 'guests' && <GuestsView guests={guests} setGuests={setGuests} />}
           {tab === 'todos' && <TodoView todos={todos} setTodos={setTodos} />}
           {tab === 'notes' && <NotesView notes={notes} setNotes={setNotes} />}
         </main>
