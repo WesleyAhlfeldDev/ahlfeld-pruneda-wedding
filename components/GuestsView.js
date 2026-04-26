@@ -271,6 +271,20 @@ export default function GuestsView({ guests, setGuests }) {
   const [filterRsvp, setFilterRsvp] = useState('all')
   const [filterRole, setFilterRole] = useState('all')
   const [filterSide, setFilterSide] = useState('all')
+  const [statFilter, setStatFilter] = useState(null)
+
+  function applyStatFilter(stat) {
+    if (stat === 'plusOne') {
+      setStatFilter('plusOne')
+      setFilterRsvp('all')
+    } else if (stat === 'all') {
+      setStatFilter(null)
+      setFilterRsvp('all')
+    } else {
+      setStatFilter(null)
+      setFilterRsvp(stat)
+    }
+  }
 
   function addGuest() {
     if (!newGuest.firstName.trim()) return
@@ -291,20 +305,28 @@ export default function GuestsView({ guests, setGuests }) {
     return guests.filter(g => {
       const name = `${g.firstName} ${g.lastName}`.toLowerCase()
       if (search && !name.includes(search.toLowerCase())) return false
+      if (statFilter === 'plusOne' && !g.plusOne) return false
       if (filterRsvp !== 'all' && g.rsvp !== filterRsvp) return false
       if (filterRole !== 'all' && g.role !== filterRole) return false
-      if (filterSide !== 'all' && g.side !== filterSide) return false
       return true
     })
-  }, [guests, search, filterRsvp, filterRole])
+  }, [guests, search, filterRsvp, filterRole, statFilter])
+
+  const sections = useMemo(() => {
+    const sides = filterSide === 'all' ? ['both', 'bride', 'groom'] : [filterSide]
+    return sides.map(side => ({
+      id: side,
+      label: side === 'both' ? 'Both Sides' : side === 'bride' ? "Bride's Side" : "Groom's Side",
+      guests: filtered.filter(g => g.side === side),
+    })).filter(s => s.guests.length > 0)
+  }, [filtered, filterSide])
 
   // Stats
-  const attending = guests.filter(g => g.rsvp === 'attending')
-  const declined = guests.filter(g => g.rsvp === 'declined')
-  const pending = guests.filter(g => g.rsvp === 'pending')
   const plusOnes = guests.filter(g => g.plusOne)
   const plusOnesAttending = plusOnes.filter(g => g.plusOneRsvp === 'attending')
-  const totalAttending = attending.length + plusOnesAttending.length
+  const totalAttending = guests.filter(g => g.rsvp === 'attending').length + plusOnesAttending.length
+  const pending = guests.filter(g => g.rsvp === 'pending')
+  const declined = guests.filter(g => g.rsvp === 'declined')
 
   // Roles that have guests (for filter)
   const usedRoles = [...new Set(guests.map(g => g.role))]
@@ -312,23 +334,37 @@ export default function GuestsView({ guests, setGuests }) {
   return (
     <div className="space-y-5 max-w-3xl">
       {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="bg-forest-500 rounded-2xl border border-plum-700/50 p-4 text-center">
+      <div className="grid grid-cols-3 gap-3">
+        <button onClick={() => applyStatFilter('all')}
+          className={`bg-forest-500 rounded-2xl border p-4 text-center transition-all hover:opacity-90 ${filterRsvp === 'all' && !statFilter ? 'border-plum-400 ring-1 ring-plum-400/40' : 'border-plum-700/50'}`}>
           <p className="font-serif text-2xl font-bold text-white">{guests.length}</p>
           <p className="text-xs text-moon-300 font-sans mt-0.5">Invited</p>
-        </div>
-        <div className="bg-forest-500 rounded-2xl border border-sage-300/30 p-4 text-center">
+        </button>
+        <button onClick={() => applyStatFilter('plusOne')}
+          className={`bg-forest-500 rounded-2xl border p-4 text-center transition-all hover:opacity-90 ${statFilter === 'plusOne' ? 'border-plum-400 ring-1 ring-plum-400/40' : 'border-plum-600/40'}`}>
+          <p className="font-serif text-2xl font-bold text-plum-200">{plusOnes.length}</p>
+          <p className="text-xs text-moon-300 font-sans mt-0.5">+1s</p>
+        </button>
+        <button onClick={() => applyStatFilter('all')}
+          className="bg-forest-500 rounded-2xl border border-plum-700/50 p-4 text-center transition-all hover:opacity-90">
+          <p className="font-serif text-2xl font-bold text-white">{guests.length + plusOnes.length}</p>
+          <p className="text-xs text-moon-300 font-sans mt-0.5">Total</p>
+        </button>
+        <button onClick={() => applyStatFilter('attending')}
+          className={`bg-forest-500 rounded-2xl border p-4 text-center transition-all hover:opacity-90 ${filterRsvp === 'attending' && !statFilter ? 'border-sage-400 ring-1 ring-sage-400/30' : 'border-sage-300/30'}`}>
           <p className="font-serif text-2xl font-bold text-sage-500">{totalAttending}</p>
           <p className="text-xs text-moon-300 font-sans mt-0.5">Attending</p>
-        </div>
-        <div className="bg-forest-500 rounded-2xl border border-plum-700/50 p-4 text-center">
+        </button>
+        <button onClick={() => applyStatFilter('pending')}
+          className={`bg-forest-500 rounded-2xl border p-4 text-center transition-all hover:opacity-90 ${filterRsvp === 'pending' && !statFilter ? 'border-moon-400 ring-1 ring-moon-400/30' : 'border-plum-700/50'}`}>
           <p className="font-serif text-2xl font-bold text-moon-300">{pending.length}</p>
           <p className="text-xs text-moon-300 font-sans mt-0.5">Pending</p>
-        </div>
-        <div className="bg-forest-500 rounded-2xl border border-red-700/30 p-4 text-center">
+        </button>
+        <button onClick={() => applyStatFilter('declined')}
+          className={`bg-forest-500 rounded-2xl border p-4 text-center transition-all hover:opacity-90 ${filterRsvp === 'declined' && !statFilter ? 'border-red-500 ring-1 ring-red-500/30' : 'border-red-700/30'}`}>
           <p className="font-serif text-2xl font-bold text-red-400">{declined.length}</p>
           <p className="text-xs text-moon-300 font-sans mt-0.5">Declined</p>
-        </div>
+        </button>
       </div>
 
       {/* Search + filters + add */}
@@ -347,7 +383,7 @@ export default function GuestsView({ guests, setGuests }) {
         <div className="flex items-center gap-2 flex-wrap">
           {/* RSVP filter */}
           {['all', 'attending', 'pending', 'declined'].map(r => (
-            <button key={r} onClick={() => setFilterRsvp(r)}
+            <button key={r} onClick={() => { setFilterRsvp(r); setStatFilter(null) }}
               className={`text-xs font-sans px-3 py-1.5 rounded-full border transition-all capitalize ${
                 filterRsvp === r
                   ? 'bg-plum-500 text-white border-plum-500'
@@ -450,11 +486,20 @@ export default function GuestsView({ guests, setGuests }) {
         </div>
       )}
 
-      {/* Guest list */}
-      {filtered.length > 0 ? (
-        <div className="bg-forest-500 rounded-2xl border border-plum-700/50 overflow-hidden">
-          {filtered.map(guest => (
-            <GuestRow key={guest.id} guest={guest} onUpdate={updateGuest} onDelete={deleteGuest} />
+      {/* Guest list grouped by side */}
+      {sections.length > 0 ? (
+        <div className="space-y-4">
+          {sections.map(section => (
+            <div key={section.id}>
+              <h3 className="text-xs font-sans font-semibold uppercase tracking-widest text-moon-400 mb-2 px-1">
+                {section.label} <span className="text-moon-500">({section.guests.length})</span>
+              </h3>
+              <div className="bg-forest-500 rounded-2xl border border-plum-700/50 overflow-hidden">
+                {section.guests.map(guest => (
+                  <GuestRow key={guest.id} guest={guest} onUpdate={updateGuest} onDelete={deleteGuest} />
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       ) : guests.length === 0 ? (
@@ -473,6 +518,7 @@ export default function GuestsView({ guests, setGuests }) {
           <p className="text-moon-300 font-sans text-sm">No guests match your filters.</p>
         </div>
       )}
+
     </div>
   )
 }

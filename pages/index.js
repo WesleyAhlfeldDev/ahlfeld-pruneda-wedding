@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import Head from 'next/head'
-import { Plus, LayoutList, GitCompare, Calculator, Download, Upload, Heart, Sparkles, NotebookPen, ListChecks, Cloud, HardDrive, Users } from 'lucide-react'
+import { Plus, LayoutList, GitCompare, Calculator, Download, Upload, Heart, Sparkles, NotebookPen, ListChecks, Cloud, HardDrive, Users, Plane, Images } from 'lucide-react'
 import VenueCard from '../components/VenueCard'
 import VenueForm from '../components/VenueForm'
 import PriceEstimator from '../components/PriceEstimator'
@@ -8,16 +8,19 @@ import CompareView from '../components/CompareView'
 import NotesView from '../components/NotesView'
 import TodoView from '../components/TodoView'
 import GuestsView from '../components/GuestsView'
+import TravelView from '../components/TravelView'
+import MediaView from '../components/MediaView'
 import { loadFromDB, saveToDB, subscribeToChanges, saveToLocal, isUsingSupabase, emptyState } from '../lib/db'
-import { DEFAULT_DATA } from '../lib/data'
+import { DEFAULT_DATA, formatCurrency } from '../lib/data'
 
-const TABS = [
+const BASE_TABS = [
   { id: 'venues', label: 'Venues', icon: LayoutList },
   { id: 'compare', label: 'Compare', icon: GitCompare },
   { id: 'estimate', label: 'Estimate', icon: Calculator },
   { id: 'guests', label: 'Guests', icon: Users },
   { id: 'todos', label: 'To-Do', icon: ListChecks },
   { id: 'notes', label: 'Notes', icon: NotebookPen },
+  { id: 'media', label: 'Media & Files', icon: Images },
 ]
 
 export default function Home() {
@@ -29,6 +32,9 @@ export default function Home() {
   const [notes, setNotes] = useState([])
   const [todos, setTodos] = useState([])
   const [guests, setGuests] = useState([])
+  const [decision, setDecision] = useState(emptyState().decision)
+  const [travelInfo, setTravelInfo] = useState(emptyState().travelInfo)
+  const [media, setMedia] = useState([])
   const [tab, setTab] = useState('venues')
   const [showAddVenue, setShowAddVenue] = useState(false)
   const [highlightedId, setHighlightedId] = useState(null)
@@ -49,6 +55,9 @@ export default function Home() {
       setNotes(d.notes || [])
       setTodos(d.todos || [])
       setGuests(d.guests || [])
+      setDecision(d.decision || emptyState().decision)
+      setTravelInfo(d.travelInfo || emptyState().travelInfo)
+      setMedia(d.media || [])
       setLoaded(true)
     })
   }, [])
@@ -59,7 +68,7 @@ export default function Home() {
       isRemoteUpdate.current = false
       return
     }
-    const state = { venues, guestCount, weddingDate, comparisons, estimate, notes, todos, guests }
+    const state = { venues, guestCount, weddingDate, comparisons, estimate, notes, todos, guests, decision, travelInfo, media }
     clearTimeout(saveTimeout.current)
     saveTimeout.current = setTimeout(async () => {
       setSyncing(true)
@@ -68,7 +77,7 @@ export default function Home() {
       setSyncing(false)
     }, 800)
     return () => clearTimeout(saveTimeout.current)
-  }, [venues, guestCount, weddingDate, comparisons, estimate, notes, todos, guests, loaded])
+  }, [venues, guestCount, weddingDate, comparisons, estimate, notes, todos, guests, decision, travelInfo, media, loaded])
 
   // Real-time subscription
   useEffect(() => {
@@ -83,6 +92,9 @@ export default function Home() {
       setNotes(d.notes || [])
       setTodos(d.todos || [])
       setGuests(d.guests || [])
+      setDecision(d.decision || emptyState().decision)
+      setTravelInfo(d.travelInfo || emptyState().travelInfo)
+      setMedia(d.media || [])
     })
     return unsub
   }, [])
@@ -90,11 +102,26 @@ export default function Home() {
   // Save before unload
   useEffect(() => {
     if (!loaded) return
-    const state = { venues, guestCount, weddingDate, comparisons, estimate, notes, todos, guests }
+    const state = { venues, guestCount, weddingDate, comparisons, estimate, notes, todos, guests, decision, travelInfo, media }
     const handle = () => { saveToLocal(state); saveToDB(state) }
     window.addEventListener('beforeunload', handle)
     return () => window.removeEventListener('beforeunload', handle)
-  }, [loaded, venues, guestCount, weddingDate, comparisons, estimate, notes, todos, guests])
+  }, [loaded, venues, guestCount, weddingDate, comparisons, estimate, notes, todos, guests, decision, travelInfo, media])
+
+  const tabs = useMemo(() => {
+    const base = decision?.venueId
+      ? BASE_TABS.filter(t => t.id !== 'compare')
+      : BASE_TABS
+    if (!decision?.venueId) return base
+    const guestsIdx = base.findIndex(t => t.id === 'guests')
+    const result = [...base]
+    result.splice(guestsIdx + 1, 0, { id: 'travel', label: 'Travel Info', icon: Plane })
+    return result
+  }, [decision?.venueId])
+
+  useEffect(() => {
+    if (tab === 'compare' && decision?.venueId) setTab('venues')
+  }, [decision?.venueId])
 
   const daysUntil = useMemo(() => {
     if (!weddingDate) return null
@@ -109,7 +136,13 @@ export default function Home() {
     if (!confirm('Remove this venue?')) return
     setVenues(prev => prev.filter(v => v.id !== id))
     if (highlightedId === id) setHighlightedId(null)
+    if (decision?.venueId === id) setDecision(emptyState().decision)
   }
+
+  function chooseVenueAndPackage(venueId, packageId) {
+    setDecision({ venueId, packageId, decidedAt: new Date().toISOString() })
+  }
+  function clearDecision() { setDecision(emptyState().decision) }
 
   function exportData() {
     const blob = new Blob([JSON.stringify({ venues }, null, 2)], { type: 'application/json' })
@@ -190,13 +223,45 @@ export default function Home() {
 
         <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
           <div className="mb-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="bg-forest-500 rounded-2xl border border-plum-700/50 p-4 shadow-sm flex flex-col items-center justify-center min-h-24">
-              <p className="font-serif text-2xl font-bold text-plum-50">{venues.length}</p>
-              <p className="text-xs text-moon-300 font-sans mt-1">Venues Saved</p>
+            <div className={`rounded-2xl border p-4 shadow-sm flex flex-col items-center justify-center min-h-24 text-center transition-all
+              ${decision?.venueId
+                ? 'bg-blush-600/20 border-blush-400/40'
+                : 'bg-forest-500 border-plum-700/50'}`}>
+              {decision?.venueId ? (() => {
+                const chosenVenue = venues.find(v => v.id === decision.venueId)
+                return (
+                  <>
+                    <p className="font-serif text-sm font-bold text-blush-200 leading-tight line-clamp-2">{chosenVenue?.name ?? '—'}</p>
+                    <p className="text-xs text-blush-300 font-sans mt-1">Venue Selected</p>
+                  </>
+                )
+              })() : (
+                <>
+                  <p className="font-serif text-2xl font-bold text-plum-50">{venues.length}</p>
+                  <p className="text-xs text-moon-300 font-sans mt-1">Venues Saved</p>
+                </>
+              )}
             </div>
-            <div className="bg-forest-500 rounded-2xl border border-plum-700/50 p-4 shadow-sm flex flex-col items-center justify-center min-h-24">
-              <p className="font-serif text-2xl font-bold text-plum-50">{venues.reduce((s, v) => s + v.packages.length, 0)}</p>
-              <p className="text-xs text-moon-300 font-sans mt-1">Total Packages</p>
+            <div className={`rounded-2xl border p-4 shadow-sm flex flex-col items-center justify-center min-h-24 text-center transition-all
+              ${decision?.packageId
+                ? 'bg-blush-600/20 border-blush-400/40'
+                : 'bg-forest-500 border-plum-700/50'}`}>
+              {decision?.packageId ? (() => {
+                const chosenVenue = venues.find(v => v.id === decision.venueId)
+                const chosenPkg = chosenVenue?.packages?.find(p => p.id === decision.packageId)
+                return (
+                  <>
+                    <p className="font-serif text-sm font-bold text-blush-200 leading-tight line-clamp-2">{chosenPkg?.name ?? '—'}</p>
+                    <p className="text-xs text-blush-300 font-sans mt-1">{chosenPkg ? formatCurrency(chosenPkg.price) : ''}</p>
+                    <p className="text-xs text-blush-300/70 font-sans">Package Selected</p>
+                  </>
+                )
+              })() : (
+                <>
+                  <p className="font-serif text-2xl font-bold text-plum-50">{venues.reduce((s, v) => s + v.packages.length, 0)}</p>
+                  <p className="text-xs text-moon-300 font-sans mt-1">Total Packages</p>
+                </>
+              )}
             </div>
             <div className="bg-forest-500 rounded-2xl border border-plum-700/50 p-4 shadow-sm flex flex-col items-center justify-center min-h-24">
               <input type="number" value={guestCount} onChange={e => setGuestCount(e.target.value)} placeholder="—"
@@ -223,7 +288,7 @@ export default function Home() {
           </div>
 
           <div className="flex items-center gap-1 bg-forest-500 rounded-2xl p-1.5 border border-plum-700/50 shadow-sm mb-6 w-fit flex-wrap">
-            {TABS.map(t => {
+            {tabs.map(t => {
               const Icon = t.icon
               return (
                 <button key={t.id} onClick={() => setTab(t.id)}
@@ -242,6 +307,9 @@ export default function Home() {
                   {t.id === 'notes' && notes.length > 0 && (
                     <span className={`text-xs px-1.5 py-0.5 rounded-full ${tab === t.id ? 'bg-forest-6000' : 'bg-forest-500 text-white0'}`}>{notes.length}</span>
                   )}
+                  {t.id === 'media' && media.length > 0 && (
+                    <span className={`text-xs px-1.5 py-0.5 rounded-full ${tab === t.id ? 'bg-forest-6000' : 'bg-forest-400 text-moon-300'}`}>{media.length}</span>
+                  )}
                 </button>
               )
             })}
@@ -249,6 +317,28 @@ export default function Home() {
 
           {tab === 'venues' && (
             <div className="space-y-6">
+              {decision?.venueId && (() => {
+                const chosenVenue = venues.find(v => v.id === decision.venueId)
+                const chosenPkg = chosenVenue?.packages?.find(p => p.id === decision.packageId)
+                if (!chosenVenue) return null
+                return (
+                  <div className="bg-blush-600/20 border border-blush-400/40 rounded-2xl p-4 flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-blush-500/20 flex items-center justify-center shrink-0">
+                      <Heart className="w-5 h-5 text-blush-200 fill-current" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-sans text-xs text-blush-300 font-semibold uppercase tracking-wider">Official Decision</p>
+                      <p className="font-serif text-white font-semibold truncate">{chosenVenue.name}</p>
+                      {chosenPkg && (
+                        <p className="text-sm text-moon-300 font-sans">{chosenPkg.name} · {formatCurrency(chosenPkg.price)}</p>
+                      )}
+                    </div>
+                    <button onClick={clearDecision} className="text-xs text-moon-300 hover:text-white font-sans shrink-0 transition-colors">
+                      Change
+                    </button>
+                  </div>
+                )
+              })()}
               {showAddVenue && <VenueForm onSave={addVenue} onCancel={() => setShowAddVenue(false)} />}
               {venues.length === 0 && !showAddVenue && (
                 <div className="card p-16 text-center">
@@ -263,7 +353,12 @@ export default function Home() {
                 </div>
               )}
               {venues.map(venue => (
-                <VenueCard key={venue.id} venue={venue} onUpdate={updateVenue} onDelete={deleteVenue} isHighlighted={highlightedId === venue.id} />
+                <VenueCard key={venue.id} venue={venue} onUpdate={updateVenue} onDelete={deleteVenue}
+                  isHighlighted={highlightedId === venue.id}
+                  decision={decision}
+                  onChoose={(packageId) => chooseVenueAndPackage(venue.id, packageId)}
+                  onClearDecision={clearDecision}
+                />
               ))}
               {venues.length > 0 && !showAddVenue && (
                 <button onClick={() => setShowAddVenue(true)}
@@ -283,6 +378,8 @@ export default function Home() {
           {tab === 'guests' && <GuestsView guests={guests} setGuests={setGuests} />}
           {tab === 'todos' && <TodoView todos={todos} setTodos={setTodos} />}
           {tab === 'notes' && <NotesView notes={notes} setNotes={setNotes} />}
+          {tab === 'travel' && <TravelView travelInfo={travelInfo} setTravelInfo={setTravelInfo} decision={decision} venues={venues} />}
+          {tab === 'media' && <MediaView media={media} setMedia={setMedia} />}
         </main>
 
         <footer className="text-center py-8 text-xs text-white0 font-sans">

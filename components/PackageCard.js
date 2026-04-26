@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Pencil, Trash2, Check, X, Plus, Clock, Users, ChevronDown, ChevronUp } from 'lucide-react'
+import { Pencil, Trash2, Check, X, Plus, Clock, Users, ChevronDown, ChevronUp, Heart } from 'lucide-react'
 import { formatCurrency } from '../lib/data'
 
-export default function PackageCard({ pkg, onUpdate, onDelete }) {
+export default function PackageCard({ pkg, onUpdate, onDelete, isChosen, onChoose, onClearChoice }) {
   const [open, setOpen] = useState(false)
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(pkg)
@@ -86,7 +86,10 @@ export default function PackageCard({ pkg, onUpdate, onDelete }) {
   }
 
   return (
-    <div className="relative border border-plum-600/50 rounded-xl overflow-hidden bg-forest-400 hover:border-plum-500 hover:bg-forest-300 transition-all group">
+    <div className={`relative border rounded-xl overflow-hidden bg-forest-400 transition-all group
+      ${isChosen
+        ? 'border-blush-400/60 ring-1 ring-blush-400/30 hover:border-blush-300'
+        : 'border-plum-600/50 hover:border-plum-500 hover:bg-forest-300'}`}>
       {/* Accordion Header */}
       <button
         onClick={() => setOpen(o => !o)}
@@ -107,6 +110,11 @@ export default function PackageCard({ pkg, onUpdate, onDelete }) {
               <Clock className="w-3 h-3" /> {pkg.hours} hrs
             </span>
           )}
+          {isChosen && (
+            <span className="inline-flex items-center gap-1 bg-blush-600/30 text-blush-200 text-xs font-sans font-medium px-2 py-0.5 rounded-full border border-blush-400/40 whitespace-nowrap">
+              <Heart className="w-3 h-3 fill-current" /> Our Package
+            </span>
+          )}
         </div>
 
         <div className="shrink-0">
@@ -118,15 +126,23 @@ export default function PackageCard({ pkg, onUpdate, onDelete }) {
 
       {/* Action buttons — hidden on mobile, absolutely positioned on hover for desktop */}
       <div
-        className="hidden sm:flex absolute right-10 top-3 gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-forest-500/90 rounded-lg px-1 py-0.5 shadow-sm"
+        className="hidden sm:flex items-center gap-2 absolute right-10 top-2.5 opacity-0 group-hover:opacity-100 transition-opacity"
         onClick={e => e.stopPropagation()}
       >
-        <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-forest-500 text-moon-300 transition-colors">
-          <Pencil className="w-3.5 h-3.5" />
-        </button>
-        <button onClick={handleDelete} className="p-1.5 rounded-lg hover:bg-red-50 text-white0 hover:text-red-400 transition-colors">
-          <Trash2 className="w-3.5 h-3.5" />
-        </button>
+        {!isChosen && (
+          <button onClick={onChoose}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blush-600/20 border border-blush-400/40 text-blush-200 hover:bg-blush-600/30 hover:border-blush-300 text-xs font-sans font-semibold transition-all">
+            <Heart className="w-3.5 h-3.5" /> I Do
+          </button>
+        )}
+        <div className="flex gap-1 bg-forest-500/90 rounded-lg px-1 py-0.5 shadow-sm">
+          <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-forest-500 text-moon-300 transition-colors">
+            <Pencil className="w-3.5 h-3.5" />
+          </button>
+          <button onClick={handleDelete} className="p-1.5 rounded-lg hover:bg-red-50 text-white0 hover:text-red-400 transition-colors">
+            <Trash2 className="w-3.5 h-3.5" />
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -149,6 +165,23 @@ export default function PackageCard({ pkg, onUpdate, onDelete }) {
               ))}
             </ul>
           )}
+          <div className="mt-4 pt-3 border-t border-plum-800/50" onClick={e => e.stopPropagation()}>
+            {isChosen ? (
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-blush-300 font-sans flex items-center gap-1.5">
+                  <Heart className="w-3.5 h-3.5 fill-current" /> This is our chosen package
+                </span>
+                <button onClick={onClearChoice} className="text-xs text-moon-300 hover:text-white font-sans transition-colors">
+                  Change
+                </button>
+              </div>
+            ) : (
+              <button onClick={onChoose}
+                className="w-full py-2 rounded-lg border border-blush-400/40 bg-blush-600/10 text-blush-200 hover:bg-blush-600/20 hover:border-blush-300 text-xs font-sans font-medium transition-all flex items-center justify-center gap-1.5">
+                <Heart className="w-3.5 h-3.5" /> Choose This Package
+              </button>
+            )}
+          </div>
         </div>
       )}
     </div>

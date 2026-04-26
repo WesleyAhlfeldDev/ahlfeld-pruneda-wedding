@@ -5,7 +5,8 @@ import PackageCard from './PackageCard'
 import AddOnRow from './AddOnRow'
 import VenueForm from './VenueForm'
 
-export default function VenueCard({ venue, onUpdate, onDelete, isHighlighted }) {
+export default function VenueCard({ venue, onUpdate, onDelete, isHighlighted, decision, onChoose, onClearDecision }) {
+  const isChosen = decision?.venueId === venue.id
   const [expanded, setExpanded] = useState(true)
   const [editing, setEditing] = useState(false)
   const [showAddPackage, setShowAddPackage] = useState(false)
@@ -68,7 +69,7 @@ export default function VenueCard({ venue, onUpdate, onDelete, isHighlighted }) 
   }
 
   return (
-    <div className={`card transition-all duration-300 relative group ${isHighlighted ? 'ring-2 ring-plum-400 shadow-lg' : ''}`}>
+    <div className={`card transition-all duration-300 relative group ${isHighlighted ? 'ring-2 ring-plum-400 shadow-lg' : ''} ${isChosen ? 'ring-2 ring-blush-300 shadow-lg' : ''}`}>
       {/* Cover Image */}
       {venue.coverImage && (
         <div className="h-48 overflow-hidden rounded-t-2xl bg-forest-600">
@@ -87,6 +88,11 @@ export default function VenueCard({ venue, onUpdate, onDelete, isHighlighted }) 
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <h2 className="font-serif text-xl font-semibold text-white">{venue.name}</h2>
+              {isChosen && (
+                <span className="inline-flex items-center gap-1 bg-blush-600/30 text-blush-200 text-xs font-sans font-medium px-2 py-0.5 rounded-full border border-blush-400/40">
+                  <Check className="w-3 h-3" /> Our Venue
+                </span>
+              )}
               {isHighlighted && (
                 <span className="inline-flex items-center gap-1 bg-forest-500 text-plum-200 text-xs font-sans font-medium px-2 py-0.5 rounded-full">
                   <Star className="w-3 h-3 fill-current" /> Top Pick
@@ -150,7 +156,11 @@ export default function VenueCard({ venue, onUpdate, onDelete, isHighlighted }) 
 
             <div className="space-y-2">
               {venue.packages.map(pkg => (
-                <PackageCard key={pkg.id} pkg={pkg} onUpdate={updatePackage} onDelete={deletePackage} />
+                <PackageCard key={pkg.id} pkg={pkg} onUpdate={updatePackage} onDelete={deletePackage}
+                  isChosen={isChosen && decision?.packageId === pkg.id}
+                  onChoose={() => onChoose(pkg.id)}
+                  onClearChoice={onClearDecision}
+                />
               ))}
             </div>
 
