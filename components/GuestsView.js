@@ -270,6 +270,7 @@ export default function GuestsView({ guests, setGuests }) {
   const [search, setSearch] = useState('')
   const [filterRsvp, setFilterRsvp] = useState('all')
   const [filterRole, setFilterRole] = useState('all')
+  const [filterSide, setFilterSide] = useState('all')
 
   function addGuest() {
     if (!newGuest.firstName.trim()) return
@@ -292,6 +293,7 @@ export default function GuestsView({ guests, setGuests }) {
       if (search && !name.includes(search.toLowerCase())) return false
       if (filterRsvp !== 'all' && g.rsvp !== filterRsvp) return false
       if (filterRole !== 'all' && g.role !== filterRole) return false
+      if (filterSide !== 'all' && g.side !== filterSide) return false
       return true
     })
   }, [guests, search, filterRsvp, filterRole])
@@ -352,6 +354,25 @@ export default function GuestsView({ guests, setGuests }) {
                   : 'bg-forest-500 text-moon-300 border-plum-700/40 hover:border-plum-500'
               }`}>
               {r === 'all' ? `All (${guests.length})` : `${r.charAt(0).toUpperCase() + r.slice(1)} (${guests.filter(g => g.rsvp === r).length})`}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-2 flex-wrap">
+          {/* Side filter */}
+          {[
+            { id: 'all', label: 'All Sides' },
+            { id: 'bride', label: "Bride's Side" },
+            { id: 'groom', label: "Groom's Side" },
+            { id: 'both', label: 'Both Sides' },
+          ].map(s => (
+            <button key={s.id} onClick={() => setFilterSide(s.id)}
+              className={`text-xs font-sans px-3 py-1.5 rounded-full border transition-all ${
+                filterSide === s.id
+                  ? 'bg-plum-500 text-white border-plum-500'
+                  : 'bg-forest-500 text-moon-300 border-plum-700/40 hover:border-plum-500'
+              }`}>
+              {s.id === 'all' ? s.label : `${s.label} (${guests.filter(g => g.side === s.id).length})`}
             </button>
           ))}
         </div>
