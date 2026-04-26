@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronDown, ChevronUp, MapPin, ExternalLink, BedDouble, Plane, Utensils, Dumbbell, Sparkles, Baby, Wine, Info, Compass, Phone, Building2, Heart, Globe, Car, Check } from 'lucide-react'
+import { ChevronDown, ChevronUp, MapPin, ExternalLink, BedDouble, Plane, Utensils, Dumbbell, Sparkles, Baby, Wine, Info, Compass, Phone, Building2, Heart, Globe, Car, Check, Plus, X, Pencil, Trash2 } from 'lucide-react'
 
 // ─── Travel overview questions ────────────────────────────────────────────────
 
@@ -54,7 +54,7 @@ const SECTIONS = [
       { key: 'resortName',        label: 'Hotel Name',                         type: 'input',    placeholder: 'e.g. Grand Hyatt Downtown' },
       { key: 'address',           label: 'Address',                            type: 'input',    placeholder: 'Full address' },
       { key: 'mainPhone',         label: 'Main Phone Number',                  type: 'input',    placeholder: 'e.g. +52 998 872 8500' },
-      { key: 'website',           label: 'Website URL',                        type: 'input',    placeholder: 'https://...' },
+      { key: 'websites',          label: 'Website URLs',                       type: 'urls' },
       { key: 'checkIn',           label: 'Check-in Time',                      type: 'input',    placeholder: 'e.g. 3:00 PM' },
       { key: 'checkOut',          label: 'Check-out Time',                     type: 'input',    placeholder: 'e.g. 12:00 PM' },
       { key: 'checkInOutPolicy',  label: 'Early Check-in / Late Check-out Policy', type: 'textarea', placeholder: 'Policy details, fees, how to request...' },
@@ -199,11 +199,93 @@ const SECTIONS = [
 
 // ─── Generic section content ──────────────────────────────────────────────────
 
+function UrlsField({ fieldKey, data, onChange }) {
+  const raw = data[fieldKey]
+  const urls = Array.isArray(raw)
+    ? raw
+    : raw ? [{ label: '', url: raw }] : []
+
+  const [editingIndex, setEditingIndex] = useState(null)
+  const [draft, setDraft] = useState({ label: '', url: '' })
+
+  function addNew() {
+    const next = [...urls, { label: '', url: '' }]
+    onChange(fieldKey, next)
+    setDraft({ label: '', url: '' })
+    setEditingIndex(next.length - 1)
+  }
+
+  function startEdit(i) {
+    setDraft({ ...urls[i] })
+    setEditingIndex(i)
+  }
+
+  function save(i) {
+    if (!draft.url.trim()) { cancel(i); return }
+    onChange(fieldKey, urls.map((u, idx) => idx === i ? { ...draft } : u))
+    setEditingIndex(null)
+  }
+
+  function cancel(i) {
+    if (!urls[i]?.url) onChange(fieldKey, urls.filter((_, idx) => idx !== i))
+    setEditingIndex(null)
+  }
+
+  function remove(i) {
+    onChange(fieldKey, urls.filter((_, idx) => idx !== i))
+    if (editingIndex === i) setEditingIndex(null)
+  }
+
+  return (
+    <div className="space-y-2">
+      {urls.map((entry, i) =>
+        editingIndex === i ? (
+          <div key={i} className="flex gap-2 items-center">
+            <input autoFocus className="input w-28 shrink-0" placeholder="Label (optional)"
+              value={draft.label} onChange={e => setDraft(d => ({ ...d, label: e.target.value }))} />
+            <input className="input flex-1" placeholder="https://..."
+              value={draft.url} onChange={e => setDraft(d => ({ ...d, url: e.target.value }))}
+              onKeyDown={e => e.key === 'Enter' && save(i)} />
+            <button onClick={() => save(i)}
+              className="p-1.5 rounded-lg text-sage-400 hover:text-sage-300 transition-colors shrink-0">
+              <Check className="w-4 h-4" />
+            </button>
+            <button onClick={() => cancel(i)}
+              className="p-1.5 rounded-lg text-moon-400 hover:text-red-300 transition-colors shrink-0">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        ) : (
+          <div key={i} className="flex items-center gap-2 group">
+            <a href={entry.url} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-forest-600 border border-plum-700/50 hover:border-plum-400 hover:bg-forest-500 text-sm font-sans text-plum-100 hover:text-white transition-all flex-1 min-w-0">
+              <ExternalLink className="w-3.5 h-3.5 shrink-0 text-moon-400" />
+              <span className="truncate">{entry.label || entry.url}</span>
+            </a>
+            <button onClick={() => startEdit(i)}
+              className="p-1.5 rounded-lg text-moon-400 hover:text-white transition-colors opacity-0 group-hover:opacity-100 shrink-0">
+              <Pencil className="w-3.5 h-3.5" />
+            </button>
+            <button onClick={() => remove(i)}
+              className="p-1.5 rounded-lg text-moon-400 hover:text-red-300 transition-colors opacity-0 group-hover:opacity-100 shrink-0">
+              <Trash2 className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )
+      )}
+      <button onClick={addNew}
+        className="flex items-center gap-1.5 text-xs font-sans text-moon-300 hover:text-plum-100 transition-colors">
+        <Plus className="w-3.5 h-3.5" /> Add URL
+      </button>
+    </div>
+  )
+}
+
 function SectionFields({ fields, data, onChange }) {
   return (
     <div className="mt-4 grid sm:grid-cols-2 gap-3">
       {fields.map(field => (
-        <div key={field.key} className={field.type === 'textarea' ? 'sm:col-span-2' : ''}>
+        <div key={field.key} className={field.type === 'textarea' || field.type === 'urls' ? 'sm:col-span-2' : ''}>
           <label className="label">{field.label}</label>
           {field.type === 'textarea' ? (
             <textarea
@@ -212,6 +294,8 @@ function SectionFields({ fields, data, onChange }) {
               value={data[field.key] || ''}
               onChange={e => onChange(field.key, e.target.value)}
             />
+          ) : field.type === 'urls' ? (
+            <UrlsField fieldKey={field.key} data={data} onChange={onChange} />
           ) : (
             <input
               className="input"
