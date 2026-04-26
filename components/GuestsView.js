@@ -281,7 +281,7 @@ function GuestRow({ guest, onUpdate, onDelete }) {
       </span>
 
       {/* Actions */}
-      <div className="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-forest-400/90 rounded-lg px-1 py-0.5 shadow-sm">
+      <div className="flex gap-1 shrink-0 sm:absolute sm:right-2 sm:top-1/2 sm:-translate-y-1/2 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity sm:bg-forest-400/90 sm:rounded-lg sm:px-1 sm:py-0.5 sm:shadow-sm">
         <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg hover:bg-forest-300 text-moon-300 transition-colors">
           <Pencil className="w-3.5 h-3.5" />
         </button>
