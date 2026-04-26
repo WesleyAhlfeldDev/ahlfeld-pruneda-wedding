@@ -52,6 +52,7 @@ const DEFAULT_GUEST = {
   plusOne: false, plusOneName: '', plusOneRsvp: 'pending',
   meal: 'none', plusOneMeal: 'none',
   side: 'both', notes: '',
+  address: { street: '', city: '', state: '', zip: '', country: '' },
 }
 
 function GuestRow({ guest, onUpdate, onDelete }) {
@@ -144,6 +145,34 @@ function GuestRow({ guest, onUpdate, onDelete }) {
               <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-moon-400 pointer-events-none" />
             </div>
           </div>
+        </div>
+
+        {/* Address */}
+        <div className="space-y-2">
+          <label className="label">Mailing Address</label>
+          <input className="input" placeholder="Street address"
+            value={draft.address?.street ?? ''}
+            onChange={e => setDraft(d => ({ ...d, address: { ...d.address, street: e.target.value } }))} />
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="sm:col-span-2">
+              <input className="input" placeholder="City"
+                value={draft.address?.city ?? ''}
+                onChange={e => setDraft(d => ({ ...d, address: { ...d.address, city: e.target.value } }))} />
+            </div>
+            <div>
+              <input className="input" placeholder="State"
+                value={draft.address?.state ?? ''}
+                onChange={e => setDraft(d => ({ ...d, address: { ...d.address, state: e.target.value } }))} />
+            </div>
+            <div>
+              <input className="input" placeholder="ZIP"
+                value={draft.address?.zip ?? ''}
+                onChange={e => setDraft(d => ({ ...d, address: { ...d.address, zip: e.target.value } }))} />
+            </div>
+          </div>
+          <input className="input" placeholder="Country (if international)"
+            value={draft.address?.country ?? ''}
+            onChange={e => setDraft(d => ({ ...d, address: { ...d.address, country: e.target.value } }))} />
         </div>
 
         {/* Meal */}
@@ -465,6 +494,34 @@ export default function GuestsView({ guests, setGuests }) {
                 <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-moon-400 pointer-events-none" />
               </div>
             </div>
+          </div>
+
+          {/* Address */}
+          <div className="space-y-2">
+            <label className="label">Mailing Address</label>
+            <input className="input" placeholder="Street address"
+              value={newGuest.address?.street ?? ''}
+              onChange={e => setNewGuest(g => ({ ...g, address: { ...g.address, street: e.target.value } }))} />
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <div className="sm:col-span-2">
+                <input className="input" placeholder="City"
+                  value={newGuest.address?.city ?? ''}
+                  onChange={e => setNewGuest(g => ({ ...g, address: { ...g.address, city: e.target.value } }))} />
+              </div>
+              <div>
+                <input className="input" placeholder="State"
+                  value={newGuest.address?.state ?? ''}
+                  onChange={e => setNewGuest(g => ({ ...g, address: { ...g.address, state: e.target.value } }))} />
+              </div>
+              <div>
+                <input className="input" placeholder="ZIP"
+                  value={newGuest.address?.zip ?? ''}
+                  onChange={e => setNewGuest(g => ({ ...g, address: { ...g.address, zip: e.target.value } }))} />
+              </div>
+            </div>
+            <input className="input" placeholder="Country (if international)"
+              value={newGuest.address?.country ?? ''}
+              onChange={e => setNewGuest(g => ({ ...g, address: { ...g.address, country: e.target.value } }))} />
           </div>
 
           <label className="flex items-center gap-2.5 cursor-pointer w-fit">
